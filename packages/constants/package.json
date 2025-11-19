@@ -1,0 +1,12 @@
+{
+  "name": "@workspace/constants",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "minimatch": "^10.1.1"
+  },
+  "devDependencies": {
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*"
+  }
+}
