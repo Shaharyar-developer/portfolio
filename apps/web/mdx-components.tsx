@@ -2,6 +2,7 @@ import { Separator } from "@workspace/ui/components/separator";
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import Link from "next/link";
+import { Mermaid } from "./components/mdx/mermaid";
 
 const components: MDXComponents = {
   hr: (props) => (
@@ -89,8 +90,19 @@ const components: MDXComponents = {
     />
   ),
   pre: (props) => {
-    // Extract the code element and its props
     const children = props.children;
+
+    // Check if the child is a code element with language-mermaid
+    if (
+      children &&
+      typeof children === "object" &&
+      "props" in children &&
+      children.props?.className?.includes("language-mermaid")
+    ) {
+      return <Mermaid chart={children.props.children as string} />;
+    }
+
+    // Existing logic for other code blocks
     if (
       children &&
       typeof children === "object" &&
@@ -120,5 +132,6 @@ const components: MDXComponents = {
 export function useMDXComponents(): MDXComponents {
   return {
     ...components,
+    Mermaid,
   };
 }

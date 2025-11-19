@@ -15,7 +15,7 @@ const fontMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shaharyar Muhammad - Full-Stack AI & Web Engineer",
+  title: "Shaharyar - Full-Stack AI & Web Engineer",
   description:
     "I build intelligent, collaborative web apps with Rust and TypeScript.",
   metadataBase: new URL("https://shaharyar.dev"),
