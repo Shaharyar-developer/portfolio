@@ -78,7 +78,7 @@ const components: MDXComponents = {
       {...props}
     />
   ),
-  img: (props) => <Image className="" {...props} />,
+  img: (props) => <Image width={700} height={350} className="" {...props} />,
   table: (props) => (
     <table className="w-full my-4 table-auto border-collapse" {...props} />
   ),

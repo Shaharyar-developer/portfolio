@@ -11,6 +11,20 @@ const nextConfig = {
   turbopack: {
     root: join(__dirname, "../../"),
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "codex.novusatlas.org",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "codex.novusatlas.org",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 const withMDX = createMDX({

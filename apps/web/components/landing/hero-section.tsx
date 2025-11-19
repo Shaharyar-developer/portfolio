@@ -49,9 +49,26 @@ export function HeroSection({
             <h1 className="text-5xl font-bold tracking-tighter text-foreground sm:text-7xl lg:text-8xl">
               {name}
             </h1>
-            <p className="text-xl font-mono text-muted-foreground sm:text-2xl">
-              &gt; {title}
-            </p>
+            <div className="flex flex-col gap-6">
+              <p className="text-xl font-mono text-muted-foreground sm:text-2xl">
+                &gt; {title}
+              </p>
+
+              <ul className="flex flex-col gap-2 font-mono text-sm sm:text-base text-muted-foreground/80">
+                <li className="flex items-center gap-3">
+                  <span className="flex h-1.5 w-1.5 rounded-full bg-primary/60" />
+                  Real-time collaboration + OT/CRDT
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="flex h-1.5 w-1.5 rounded-full bg-primary/60" />
+                  AI/Embeddings/Search
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="flex h-1.5 w-1.5 rounded-full bg-primary/60" />
+                  Full-stack TS + Rust execution
+                </li>
+              </ul>
+            </div>
           </div>
 
           <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
@@ -91,6 +108,12 @@ export function HeroSection({
               View Resume <FileText className="ml-2 h-4 w-4" />
             </Link>
           </Button>
+        </div>
+
+        <div className="pt-8 border-t border-border/40">
+          <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground/60">
+            Trusted by universities, startups & early-author platforms
+          </p>
         </div>
       </div>
     </motion.div>
