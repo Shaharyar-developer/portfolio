@@ -1,8 +1,8 @@
 export const about = {
   name: "M. Shaharyar",
-  title: "Full-Stack AI & Web Engineer",
+  title: "Full-Stack Product Engineer",
   tagline:
-    "I build intelligent, collaborative web apps with Rust and TypeScript.",
+    "I build creative platforms: real-time collaboration, semantic intelligence, exceptional UX.",
   location: "Pakistan",
   contact: {
     email: "shaharyar321321@gmail.com",
@@ -18,23 +18,23 @@ export const about = {
     },
   ],
   highlights: [
-    "100k+ line production platform solo-built in 8 months",
-    "Real-time collaborative editing with OT/CRDT systems",
-    "Semantic search pipelines using Rust + vector DBs",
-    "Performance-first UI/UX work in React/Next.js",
+    "Founder & architect of a ~100k LOC production platform (solo-built)",
+    "Deep expertise in real-time OT systems powering collaborative editing",
+    "Semantic search pipelines using Rust NLP + vector indexing",
+    "Product-focused UI engineering with Next.js and clean design principles",
   ],
   featured_projects: [
     {
       id: "nova",
       name: "Novus Atlas (NOVA)",
-      type: "Content Publishing Platform",
+      type: "Creator Platform",
       description:
-        "Figma-grade real-time collaborative editor with semantic search and analytics.",
+        "A next-gen writing ecosystem: multiplayer editor, semantic discovery, and worldbuilding knowledge graph.",
       tech: [
-        "Next.js 13+",
+        "Next.js 14",
         "React",
         "TypeScript",
-        "Rust",
+        "Rust (NLP core)",
         "PostgreSQL",
         "Qdrant",
         "WebSockets",
@@ -44,28 +44,28 @@ export const about = {
       },
       stats: {
         codebase_size: "100k+ lines",
-        users: "Internal test group of authors",
+        phase: "Late beta (author testing group)",
       },
     },
     {
-      id: "crdt-library",
+      id: "open-ot",
       name: "OpenOT",
-      type: "Realtime Collaboration Library",
+      type: "Operational Transform Engine",
       description:
-        "Universal CRDT/OT abstraction layer for Tiptap, Lexical and custom editors.",
-      tech: ["TypeScript", "WebSockets", "CRDT/OT"],
+        "Production-ready OT framework powering real-time collaboration with pluggable transport + storage.",
+      tech: ["TypeScript", "WebSockets", "Operational Transformation"],
       links: {
         github: "https://github.com/Shaharyar-developer/open-ot",
         case_study: "/projects/open-ot",
       },
-      status: "V1 UNDER DEVELOPMENT",
+      status: "V1 in active development",
     },
     {
       id: "vad-wasm",
       name: "Voice Activity Detection",
       type: "ML/Audio Processing",
       description:
-        "No-deps VAD with noise filtering using Mel spectrograms, planned as a WASM demo.",
+        "Noise-resistant VAD algorithm using Mel spectrograms and audio heuristics. WASM port in progress.",
       tech: ["Rust", "FFmpeg", "WebAssembly (planned)"],
       links: {},
     },
@@ -81,14 +81,14 @@ export const about = {
     },
   ],
   skillset: {
-    languages: ["TypeScript", "JavaScript", "Rust", "Python", "SQL"],
+    languages: ["TypeScript", "Rust", "Python", "SQL"],
     frameworks: ["Next.js", "React", "Hono", "Express", "Electron"],
     databases: ["PostgreSQL", "Qdrant", "Redis", "MySQL"],
     specializations: [
-      "Real-time collaboration",
-      "Semantic embeddings",
-      "AI-enhanced writing tools",
-      "High-performance UI engineering",
+      "Real-time infrastructure",
+      "Semantic embeddings & NLP",
+      "Creator tools & publishing platforms",
+      "High-performance, accessible UI/UX",
     ],
   },
   resume: "/resume.pdf",
