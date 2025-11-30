@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <article className="prose dark:prose-invert max-w-prose mx-auto">
+    <article className="prose dark:prose-invert max-w-[90%] pt-4 font-mono sm:max-w-prose mx-auto">
       <div className="fixed top-4 left-4">
         <Link
           href="/"

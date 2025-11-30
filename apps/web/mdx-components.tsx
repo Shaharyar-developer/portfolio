@@ -3,6 +3,7 @@ import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import Link from "next/link";
 import { Mermaid } from "./components/mdx/mermaid";
+import { Code } from "./components/mdx/code";
 
 const components: MDXComponents = {
   hr: (props) => (
@@ -58,18 +59,6 @@ const components: MDXComponents = {
       />
     );
   },
-  //   input: (props) => {
-  //     if (props.type === "checkbox") {
-  //       return (
-  //         <Checkbox
-  //           checked={props.checked}
-  //           disabled
-  //           className="disabled:cursor-auto disabled:opacity-100 inline-flex"
-  //         />
-  //       );
-  //     }
-  //     return <input {...props} />;
-  //   },
 
   a: (props) => (
     <Link
@@ -90,36 +79,26 @@ const components: MDXComponents = {
     />
   ),
   pre: (props) => {
+    // Extract the code element and its props
     const children = props.children;
-
-    // Check if the child is a code element with language-mermaid
-    if (
-      children &&
-      typeof children === "object" &&
-      "props" in children &&
-      children.props?.className?.includes("language-mermaid")
-    ) {
-      return <Mermaid chart={children.props.children as string} />;
-    }
-
-    // Existing logic for other code blocks
     if (
       children &&
       typeof children === "object" &&
       "props" in children &&
       children.props?.className
     ) {
-      return <pre {...children.props} />;
+      // This is a code block, pass it to our Code component
+      return <Code className="bg-transparent!" {...children.props} />;
     }
     // Fallback to regular pre
-    return <pre {...props} />;
+    return <pre className="bg-transparent!" {...props} />;
   },
   code: (props) => {
     // Handle inline code (no language class means inline)
     if (!props.className) {
       return (
         <code
-          className="rounded-md  px-1.5 py-0.5 font-mono text-[0.9em]"
+          className="rounded bg-transparent! italic font-normal font-mono"
           {...props}
         />
       );

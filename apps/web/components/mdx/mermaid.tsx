@@ -1,9 +1,24 @@
 "use client";
 
-import { use, useEffect, useId, useState } from "react";
+import { Suspense, use, useEffect, useId, useState } from "react";
 import { useTheme } from "next-themes";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@workspace/ui/components/dialog";
+import { Skeleton } from "@workspace/ui/components/skeleton";
 
 export function Mermaid({ chart }: { chart: string }) {
+  return (
+    <Suspense fallback={<Skeleton className="h-72 w-full rounded-lg" />}>
+      <MermaidRaw chart={chart} />
+    </Suspense>
+  );
+}
+
+function MermaidRaw({ chart }: { chart: string }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -30,6 +45,8 @@ function cachePromise<T>(
 
 function MermaidContent({ chart }: { chart: string }) {
   const id = useId();
+  const previewId = `mermaid-${id.replace(/:/g, "")}`;
+  const modalId = `${previewId}-modal`;
   const { resolvedTheme } = useTheme();
   const { default: mermaid } = use(
     cachePromise("mermaid", () => import("mermaid"))
@@ -43,18 +60,40 @@ function MermaidContent({ chart }: { chart: string }) {
     theme: resolvedTheme === "dark" ? "dark" : "default",
   });
 
-  const { svg, bindFunctions } = use(
-    cachePromise(`${chart}-${resolvedTheme}`, () => {
-      return mermaid.render(id, chart.replaceAll("\\n", "\n"));
+  const { svg: previewSvg, bindFunctions: bindPreview } = use(
+    cachePromise(`${chart}-${resolvedTheme}-${previewId}`, () => {
+      return mermaid.render(previewId, chart.replaceAll("\\n", "\n"));
+    })
+  );
+
+  const { svg: modalSvg, bindFunctions: bindModal } = use(
+    cachePromise(`${chart}-${resolvedTheme}-${modalId}`, () => {
+      return mermaid.render(modalId, chart.replaceAll("\\n", "\n"));
     })
   );
 
   return (
-    <div
-      ref={(container) => {
-        if (container) bindFunctions?.(container);
-      }}
-      dangerouslySetInnerHTML={{ __html: svg }}
-    />
+    <Dialog>
+      <DialogTrigger asChild>
+        <div
+          className="cursor-pointer hover:bg-muted/50 transition-colors rounded-lg p-2"
+          ref={(container) => {
+            if (container) bindPreview?.(container);
+          }}
+          dangerouslySetInnerHTML={{ __html: previewSvg }}
+          title="Click to zoom"
+        />
+      </DialogTrigger>
+      <DialogContent className="max-w-[90svw]! w-full overflow-auto max-h-[90vh]">
+        <DialogTitle className="sr-only">Zoomed Diagram</DialogTitle>
+        <div
+          className="flex justify-center"
+          ref={(container) => {
+            if (container) bindModal?.(container);
+          }}
+          dangerouslySetInnerHTML={{ __html: modalSvg }}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -49,13 +49,16 @@ export const about = {
     },
     {
       id: "crdt-library",
-      name: "LatticeOps",
+      name: "OpenOT",
       type: "Realtime Collaboration Library",
       description:
         "Universal CRDT/OT abstraction layer for Tiptap, Lexical and custom editors.",
       tech: ["TypeScript", "WebSockets", "CRDT/OT"],
-      links: {},
-      status: "In active development",
+      links: {
+        github: "https://github.com/Shaharyar-developer/open-ot",
+        case_study: "/projects/open-ot",
+      },
+      status: "V1 UNDER DEVELOPMENT",
     },
     {
       id: "vad-wasm",
