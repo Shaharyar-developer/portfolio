@@ -31,7 +31,7 @@ export const about = {
       description:
         "A next-gen writing ecosystem: multiplayer editor, semantic discovery, and worldbuilding knowledge graph.",
       tech: [
-        "Next.js 14",
+        "Next.js",
         "React",
         "TypeScript",
         "Rust (NLP core)",
