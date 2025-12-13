@@ -18,8 +18,8 @@ interface FeaturedProject {
   description: string;
   tech?: string[];
   links?: Record<string, string | undefined>;
-  stats?: Record<string, string>;
-  status?: string;
+  impact?: string[];
+  lessons_learned?: string[];
 }
 
 interface ProjectsSectionProps {
@@ -66,23 +66,39 @@ function ProjectItem({ project }: { project: FeaturedProject }) {
             {project.description}
           </p>
 
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            {project.stats && (
-              <div className="flex gap-8">
-                {Object.entries(project.stats).map(([label, value]) => (
-                  <div key={label} className="flex flex-col gap-1">
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground/60">
-                      {label.replace("_", " ")}
-                    </span>
-                    <span className="font-mono text-sm font-medium text-foreground">
-                      {value}
-                    </span>
-                  </div>
-                ))}
+          <div className="flex flex-col gap-6">
+            {project.impact && project.impact.length > 0 && (
+              <div className="space-y-3">
+                <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground/60">
+                  Impact & Stats
+                </h4>
+                <ul className="grid gap-2 sm:grid-cols-2">
+                  {project.impact.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="mt-1.5 h-1 w-1 rounded-full bg-primary/60 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
 
-            <div className="flex flex-wrap gap-4">
+            {project.lessons_learned && project.lessons_learned.length > 0 && (
+              <div className="space-y-3">
+                <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground/60">
+                  Key Learnings
+                </h4>
+                <ul className="flex flex-col gap-2">
+                  {project.lessons_learned.map((item, idx) => (
+                    <li key={idx} className="text-sm text-muted-foreground/80 italic">
+                      "{item}"
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div className="flex flex-wrap gap-4 pt-2">
               {linkEntries.map(([label, href]) => (
                 <Link
                   key={label}
@@ -99,19 +115,12 @@ function ProjectItem({ project }: { project: FeaturedProject }) {
                 </Link>
               ))}
             </div>
-            <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground/60">
-              {project.status}
-            </span>
           </div>
         </div>
       </div>
-
-      {/* Separator line */}
-      <div className="absolute bottom-0 left-0 h-px w-full bg-border/40 group-hover/item:bg-primary/20 transition-colors" />
     </motion.div>
   );
-}
-
+}         
 export function ProjectsSection({ projects }: ProjectsSectionProps) {
   return (
     <LandingSection

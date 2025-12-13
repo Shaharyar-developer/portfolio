@@ -22,15 +22,17 @@ export default function Page() {
           tagline={about.tagline}
           location={about.location}
           hero_cta={about.hero_cta}
+          proof_points={about.value_proposition.proof_points}
+          availability={about.availability}
         />
 
         <HighlightsSection highlights={about.highlights} />
 
         <ProjectsSection projects={about.featured_projects} />
 
-        <SkillsetSection skillset={about.skillset} />
+        <SkillsetSection skillset={about.technical_expertise} />
 
-        <BlogSection blogs={about.blogs} />
+        <BlogSection blogs={about.writing} />
 
         <ContactSection contact={about.contact} resume={about.resume} />
       </div>

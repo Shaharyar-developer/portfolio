@@ -17,6 +17,8 @@ interface HeroSectionProps {
   tagline: string;
   location: string;
   hero_cta: { label: string; href: string }[];
+  proof_points?: string[];
+  availability?: string;
 }
 
 export function HeroSection({
@@ -25,6 +27,8 @@ export function HeroSection({
   tagline,
   location,
   hero_cta,
+  proof_points,
+  availability,
 }: HeroSectionProps) {
   return (
     <motion.div
@@ -42,7 +46,7 @@ export function HeroSection({
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
-            AVAILABLE_FOR_WORK
+            {availability || "AVAILABLE_FOR_WORK"}
           </div>
 
           <div className="flex flex-col gap-4">
@@ -54,20 +58,16 @@ export function HeroSection({
                 &gt; {title}
               </p>
 
-              <ul className="flex flex-col gap-2 font-mono text-sm sm:text-base text-muted-foreground/80">
-                <li className="flex items-center gap-3">
-                  <span className="flex h-1.5 w-1.5 rounded-full bg-primary/60" />
-                  Real-time collaboration + OT/CRDT
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="flex h-1.5 w-1.5 rounded-full bg-primary/60" />
-                  AI/Embeddings/Search
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="flex h-1.5 w-1.5 rounded-full bg-primary/60" />
-                  Full-stack TS + Rust execution
-                </li>
-              </ul>
+              {proof_points && (
+                <ul className="flex flex-col gap-2 font-mono text-sm sm:text-base text-muted-foreground/80">
+                  {proof_points.slice(0, 3).map((point, idx) => (
+                    <li key={idx} className="flex items-center gap-3">
+                      <span className="flex h-1.5 w-1.5 rounded-full bg-primary/60" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
 
