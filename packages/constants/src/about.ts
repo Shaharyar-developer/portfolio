@@ -1,6 +1,6 @@
 export const about = {
   name: "M. Shaharyar",
-  title: "Full-Stack Product Engineer",
+  title: "Full-Stack Software Engineer",
   tagline:
     "I build creative platforms: real-time collaboration, semantic intelligence, exceptional UX.",
   location: "Pakistan",
