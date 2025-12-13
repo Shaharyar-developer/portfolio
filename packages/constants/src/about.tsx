@@ -29,7 +29,7 @@ export const about = {
     proof_points: [
       "Built 150k LOC collaborative platform in 6 months (solo)",
       "1000+ beta users across real-time editing system",
-      "Former contractor: INTERPOL anti-human trafficking data analysis",
+      "Former contractor: INTERPOL (Operation Storm Makers II) anti-human trafficking data analysis",
       "3+ years leading technical operations for national conferences",
     ]
   },
@@ -62,7 +62,7 @@ export const about = {
       organization: "INTERPOL",
       period: "2023-2024",
       type: "Contract",
-      description: "Anti-human trafficking operations support",
+      description: "Anti-human trafficking operations support (Operation Storm Makers II)",
       achievements: [
         "Designed data analysis pipelines for international operations",
         "Processed and analyzed large-scale sensitive datasets",
