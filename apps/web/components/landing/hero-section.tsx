@@ -74,14 +74,20 @@ export function HeroSection({
           <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
             {tagline}
             <span className="block mt-4 font-mono text-xs uppercase tracking-widest text-muted-foreground/60">
-              // Based in '{location}'
+              Based in '{location}'
             </span>
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4">
-          {hero_cta.map((cta) => (
-            <Button asChild key={cta.href} size="lg" className="">
+        <div className="flex sm:flex-row flex-col flex-wrap gap-4">
+          {hero_cta.map((cta, i) => (
+            <Button
+              asChild
+              variant={i === 1 ? "outline" : "default"}
+              key={cta.href}
+              size="default"
+              className=""
+            >
               <Link href={cta.href}>
                 {cta.label}
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -89,8 +95,8 @@ export function HeroSection({
             </Button>
           ))}
           <Button
-            variant="outline"
-            size="lg"
+            variant="ghost"
+            size="default"
             className="bg-transparent backdrop-blur"
             asChild
           >
@@ -100,7 +106,7 @@ export function HeroSection({
           </Button>
           <Button
             variant="ghost"
-            size="lg"
+            size="default"
             className="bg-transparent backdrop-blur"
             asChild
           >
