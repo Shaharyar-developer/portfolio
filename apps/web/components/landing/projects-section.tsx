@@ -3,7 +3,6 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 
-import { Badge } from "@workspace/ui/components/badge";
 import { LandingSection } from "./landing-section";
 
 const projectVariant = {
@@ -15,11 +14,15 @@ interface FeaturedProject {
   id: string;
   name: string;
   type: string;
+  tagline?: string;
   description: string;
+  problem?: string;
+  solution?: string;
   tech?: string[];
   links?: Record<string, string | undefined>;
   impact?: string[];
   lessons_learned?: string[];
+  status?: string;
 }
 
 interface ProjectsSectionProps {
@@ -46,6 +49,9 @@ function ProjectItem({ project }: { project: FeaturedProject }) {
             <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
               {project.type}
             </p>
+            {project.tagline && (
+              <p className="text-sm text-muted-foreground/80">{project.tagline}</p>
+            )}
           </div>
 
           <div className="flex flex-wrap gap-2">
@@ -65,6 +71,31 @@ function ProjectItem({ project }: { project: FeaturedProject }) {
           <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground group-hover/item:text-foreground transition-colors">
             {project.description}
           </p>
+
+          {(project.problem || project.solution) && (
+            <div className="grid gap-6 md:grid-cols-2">
+              {project.problem && (
+                <div className="space-y-2">
+                  <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground/60">
+                    Problem
+                  </h4>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {project.problem}
+                  </p>
+                </div>
+              )}
+              {project.solution && (
+                <div className="space-y-2">
+                  <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground/60">
+                    Solution
+                  </h4>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {project.solution}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="flex flex-col gap-6">
             {project.impact && project.impact.length > 0 && (
@@ -90,8 +121,9 @@ function ProjectItem({ project }: { project: FeaturedProject }) {
                 </h4>
                 <ul className="flex flex-col gap-2">
                   {project.lessons_learned.map((item, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground/80 italic">
-                      "{item}"
+                    <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="mt-1.5 h-1 w-1 rounded-full bg-primary/60 shrink-0" />
+                      {item}
                     </li>
                   ))}
                 </ul>

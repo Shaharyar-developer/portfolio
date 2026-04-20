@@ -1,6 +1,6 @@
 "use client";
 
-import { services } from "@workspace/constants";
+import { about, services } from "@workspace/constants";
 import { LandingSection } from "@/components/landing/landing-section";
 import {
   Accordion,
@@ -30,8 +30,8 @@ const itemVariant = {
 };
 
 export default function ServicesPage() {
-  const retainers = services.offerings.filter((o) => o.price_monthly);
-  const projects = services.offerings.filter((o) => !o.price_monthly);
+  const retainers = services.offerings.filter((o) => o.category === "ongoing");
+  const projects = services.offerings.filter((o) => o.category === "project");
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
@@ -45,6 +45,13 @@ export default function ServicesPage() {
           variants={containerVariant}
           className="space-y-8"
         >
+          <motion.p
+            variants={itemVariant}
+            className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-mono uppercase tracking-wider text-primary"
+          >
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+            {about.availability}
+          </motion.p>
           <div className="space-y-6">
             <motion.h1
               variants={itemVariant}
@@ -62,7 +69,7 @@ export default function ServicesPage() {
           <motion.div variants={itemVariant}>
             <Button size="lg" asChild className="h-12 px-8 text-base">
               <Link href="https://cal.com/shaharyar-dev">
-                Book a Discovery Call <ArrowRight className="ml-2 h-4 w-4" />
+                Book an Intro Call <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </motion.div>
@@ -99,13 +106,8 @@ export default function ServicesPage() {
                       {offering.tagline}
                     </p>
                   </div>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-bold text-foreground">
-                      {offering.price_monthly}
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {offering.price_note}
-                    </span>
+                  <div className="inline-flex w-fit rounded-full border border-border/50 bg-background/60 px-3 py-1 text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                    {offering.engagement_model}
                   </div>
                   <p className="text-lg text-muted-foreground leading-relaxed">
                     {offering.description}
@@ -171,13 +173,8 @@ export default function ServicesPage() {
                       {offering.tagline}
                     </p>
                   </div>
-                  <div className="text-right">
-                    <p className="text-xl font-bold text-foreground">
-                      {offering.price_project}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {offering.price_note}
-                    </p>
+                  <div className="inline-flex w-fit rounded-full border border-border/50 bg-background/60 px-3 py-1 text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                    {offering.engagement_model}
                   </div>
                 </div>
 

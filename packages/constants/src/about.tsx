@@ -1,11 +1,11 @@
-import { Check, X } from "lucide-react";
 export const about = {
   name: "M. Shaharyar",
-  title: "Technical Founder & Advisor",
+  title: "Software Engineer, Product Builder & Technical Advisor",
   tagline:
-    "I help early-stage startups build the right product. Former INTERPOL contractor, built a 150k LOC platform solo.",
+    "I build production software end-to-end, from contract engineering and product delivery to technical advisory for teams that need senior execution.",
   location: "Pakistan",
-  availability: "Available for technical advisory & fractional CTO work",
+  availability:
+    "Currently available for contract engineering, advisory & fractional CTO work",
   contact: {
     email: "shaharyar321321@gmail.com",
     website: "https://shaharyar.dev",
@@ -24,20 +24,22 @@ export const about = {
     },
   ],
   value_proposition: {
-    headline: "Technical founder who's been in the trenches",
+    headline: "Senior engineer who ships and leads",
     subheadline:
-      "I've built production systems handling 1000+ users, worked on classified data pipelines, and led technical operations for national-level organizations. Now I help founders avoid the mistakes I've already made.",
+      "I work across strategy and execution: architecting systems, shipping features, and helping teams deliver reliably under real business constraints.",
     proof_points: [
-      "Built 150k LOC collaborative platform (solo)",
+      "Built a 250k LOC collaborative platform as a solo founder-engineer",
+      "Designed and launched Kicklayer for structured client onboarding workflows",
       "1000+ beta users across real-time editing system",
       "Former contractor: INTERPOL (Operation Storm Makers II) anti-human trafficking data analysis",
       "3+ years leading technical operations for national conferences",
     ],
   },
   highlights: [
-    "Architected production systems handling 1000+ concurrent users",
-    "Built custom Rust NLP engine for semantic analysis at scale",
-    "Designed real-time collaborative editor using Operational Transformation",
+    "Built and shipped 250k+ LOC across production systems and developer tooling",
+    "Contract-ready full-stack execution from architecture through deployment",
+    "Designed real-time collaborative infrastructure using Operational Transformation",
+    "Built Kicklayer, a live SaaS for structured client asset intake and delivery",
     "3+ years IT Director for national-level conferences (MUN)",
   ],
   experience: [
@@ -48,7 +50,7 @@ export const about = {
       type: "Startup",
       description: "Building next-generation collaborative writing platform",
       achievements: [
-        "Architected and built 150k LOC platform solo",
+        "Architected and built 250k LOC platform solo",
         "1000+ authors in closed beta testing",
         "Custom Rust NLP engine for semantic content analysis",
         "Real-time collaborative editor with Operational Transformation",
@@ -87,7 +89,7 @@ export const about = {
       description: "Technical operations for large-scale international events",
       achievements: [
         "Led technical infrastructure for national-level conferences",
-        "Managed systems supporting 500+ participants",
+        "Managed systems supporting 5000+ participants",
         "Coordinated technical teams under high-pressure environments",
         "Delivered zero-downtime operations across multi-day events",
       ],
@@ -108,7 +110,7 @@ export const about = {
         "Built end-to-end platform combining real-time editing, semantic search, and worldbuilding knowledge graphs",
       impact: [
         "1000+ authors in closed beta",
-        "150k+ lines of production code",
+        "250k+ lines of production code",
         "Custom Rust NLP engine processing large documents",
         "Real-time collaboration with offline-first architecture",
       ],
@@ -125,10 +127,43 @@ export const about = {
         case_study: "/projects/nova",
       },
       lessons_learned: [
-        "How to architect systems that scale without over-engineering",
-        "Building real-time features that work reliably at scale",
-        "Balancing performance with developer experience",
-        "Solo founder execution strategies",
+        "I scoped the platform into independently deployable modules to keep solo delivery fast without sacrificing reliability.",
+        "I designed collaboration flows to degrade gracefully under latency spikes and reconnect scenarios.",
+        "I balanced shipping velocity with maintainability by enforcing typed contracts and operational observability from day one.",
+        "I validated roadmap decisions with live author feedback loops to avoid over-building features no one needed.",
+      ],
+    },
+    {
+      id: "kicklayer",
+      name: "Kicklayer",
+      type: "Commercial SaaS",
+      tagline: "Client onboarding and asset collection platform for agencies",
+      description:
+        "Kicklayer replaces fragmented email, Slack, and Drive handoffs with a structured, magic-link client portal for collecting validated assets, briefs, and credentials.",
+      problem:
+        "Agencies lose delivery time chasing incomplete assets and clarifying requirements across scattered channels.",
+      solution:
+        "Built a schema-driven intake workflow with passwordless client access, adaptive reminders, validation checks, and authenticated export packages.",
+      impact: [
+        "Production workflow from template definition to authenticated ZIP export",
+        "Passwordless portal with autosave and drag-and-drop uploads",
+        "AI-assisted asset quality checks and auto-generated project briefs",
+        "Granular audit logs for views, uploads, rejections, and replacements",
+      ],
+      tech: [
+        "TypeScript",
+        "Next.js",
+        "Workflow Automation",
+        "Secure File Processing",
+        "Audit Logging",
+      ],
+      links: {
+        website: "https://kicklayer.com",
+      },
+      lessons_learned: [
+        "Reducing client friction at the point of submission drives more value than adding configuration complexity too early.",
+        "Structured intake schemas outperform free-form requests for downstream design and engineering quality.",
+        "Auditability and visible status tracking eliminate avoidable coordination loops between teams and clients.",
       ],
     },
     {
@@ -144,15 +179,6 @@ export const about = {
         case_study: "/projects/open-ot",
       },
       status: "V1 in active development",
-    },
-    {
-      id: "vad-wasm",
-      name: "Voice Activity Detection",
-      type: "ML/Audio Processing",
-      description:
-        "High-performance voice activity detection using Mel spectrograms and FFT analysis. Designed for browser deployment via WebAssembly.",
-      tech: ["Rust", "FFmpeg", "WebAssembly", "DSP"],
-      links: {},
     },
   ],
   writing: [
@@ -202,7 +228,7 @@ export const about = {
   cta: {
     headline: "Let's Build Something Great",
     subheadline:
-      "Whether you need strategic guidance or hands-on execution, I can help you make the right technical decisions for your startup.",
+      "Whether you need contract engineering, technical advisory, or product leadership, I can help you move from planning to shipped outcomes.",
     primary_action: {
       label: "Schedule a Call",
       href: "https://cal.com/shaharyar-dev",
@@ -216,144 +242,152 @@ export const about = {
 };
 
 export const services = {
-  headline: "Work With Me",
+  headline: "Build With Me",
   intro:
-    "I help early-stage startups make the right technical decisions. Whether you need strategic guidance or hands-on execution, here's how we can work together:",
+    "I work as a senior individual contributor, contract partner, and technical advisor. Engagements are scoped around outcomes and delivery velocity, not fixed one-size-fits-all packages.",
   offerings: [
     {
-      name: "Advisory",
-      tagline: "Strategic Guidance",
-      price_monthly: "$750/month",
-      price_note: "Month-to-month, cancel anytime",
+      name: "Contract Engineering",
+      tagline: "Hands-on product and platform delivery",
+      category: "ongoing",
+      engagement_model: "Flexible contract (part-time or full-time)",
       description:
-        "Perfect for founders who need technical judgment without full-time commitment",
+        "I integrate with your team to design, build, and ship critical product work with production-grade quality.",
       what_you_get: [
-        "2 strategy calls/month (45 min each)",
-        "Architecture & technical roadmap review",
-        "Async support via Slack/email",
-        "Tool & stack recommendations",
-        "Technical hiring guidance",
+        "Feature ownership from architecture through release",
+        "System design and implementation for high-impact roadmap items",
+        "Production hardening, observability, and performance tuning",
+        "Clear async communication with practical technical documentation",
       ],
-      time_commitment: "~5 hours/month",
+      time_commitment: "Weekly delivery cadence with async collaboration",
       best_for: [
-        "Pre-MVP validation stage",
-        "Making initial tech stack decisions",
-        "Need ongoing technical advice",
+        "Teams that need immediate senior engineering bandwidth",
+        "Startups shipping ambitious roadmap milestones",
+        "Products that need reliable execution under deadlines",
       ],
-      button_text: "Book Discovery Call",
+      button_text: "Discuss Contract Work",
+      badge: "Most Requested",
     },
     {
-      name: "Advisory + Execution",
-      tagline: "Strategy + Hands-On",
-      price_monthly: "$1,500/month",
-      price_note: "Month-to-month, cancel anytime",
+      name: "Fractional CTO",
+      tagline: "Part-time technical leadership",
+      category: "ongoing",
+      engagement_model: "Leadership support with hands-on oversight",
       description:
-        "Strategic guidance plus tactical execution for critical work",
+        "I help founders and teams make stronger technical decisions while improving execution quality and engineering alignment.",
       what_you_get: [
-        "Everything in Advisory tier",
-        "Weekly 1-hour calls",
-        "10 hours/month hands-on development",
-        "Code reviews & architecture audits",
-        "Priority async support (24hr response)",
+        "Architecture direction and technology strategy",
+        "Delivery planning and technical risk management",
+        "Hiring support, interviewing, and team mentorship",
+        "Codebase standards, review quality, and engineering process improvements",
       ],
-      time_commitment: "~15 hours/month",
+      time_commitment: "Structured weekly involvement",
       best_for: [
-        "Building MVP or early product",
-        "Need both strategy and implementation",
-        "Want technical partner without full-time hire",
+        "Teams scaling beyond initial MVP",
+        "Founders needing senior technical leadership without a full-time executive",
+        "Organizations preparing for faster engineering growth",
       ],
-      button_text: "Book Discovery Call",
-      badge: "Most Popular",
+      button_text: "Discuss Fractional CTO Support",
     },
     {
-      name: "MVP Build",
-      tagline: "Full Product Development",
-      price_project: "$8,000",
-      price_note: "One-time project fee",
-      description: "Complete product build from concept to deployment",
+      name: "Technical Advisory",
+      tagline: "Focused strategic guidance",
+      category: "ongoing",
+      engagement_model: "Recurring advisory sessions",
+      description:
+        "A lean advisory model for teams that need senior judgment on architecture, delivery trade-offs, and execution priorities.",
       what_you_get: [
-        "Technical architecture & design",
-        "Full-stack development",
-        "Production-ready codebase",
-        "Deployment & infrastructure",
-        "4-6 week delivery",
-        "1 month post-launch support",
+        "Architecture and roadmap reviews",
+        "Technical decision support for product direction",
+        "Risk identification and mitigation planning",
+        "Actionable recommendations tied to near-term execution",
       ],
-      time_commitment: "4-6 weeks full build",
+      time_commitment: "Lightweight, recurring cadence",
       best_for: [
-        "Non-technical founders",
-        "Ready to launch in 6 weeks",
-        "Need complete product built",
+        "Founders navigating critical technical decisions",
+        "Teams with delivery risk but limited leadership bandwidth",
+        "Products preparing for major architecture or scaling choices",
       ],
-      button_text: "Book Discovery Call",
+      button_text: "Book an Advisory Conversation",
+    },
+    {
+      name: "Build Sprint",
+      tagline: "Milestone-based product delivery",
+      category: "project",
+      engagement_model: "Fixed-scope sprint with clear deliverables",
+      description:
+        "I take ownership of a clearly scoped product milestone and deliver production-ready output with implementation handoff.",
+      what_you_get: [
+        "Technical scoping and implementation plan",
+        "End-to-end build of agreed sprint deliverables",
+        "Deployment support and production-readiness checklist",
+        "Post-delivery handoff with documentation and walkthrough",
+      ],
+      time_commitment: "Defined sprint timeline based on scope",
+      best_for: [
+        "Teams that need a major feature shipped quickly",
+        "Founders moving from concept to working product",
+        "Organizations that need trusted delivery without long-term hiring",
+      ],
+      button_text: "Plan a Build Sprint",
     },
     {
       name: "Technical Audit",
-      tagline: "One-Time Review",
-      price_project: "$500",
-      price_note: "One-time fee",
+      tagline: "Architecture and delivery assessment",
+      category: "project",
+      engagement_model: "One-off deep technical review",
       description:
-        "Get a comprehensive technical review of your product or idea",
+        "A focused review of architecture, code quality, and delivery risk with prioritized recommendations your team can execute immediately.",
       what_you_get: [
-        "1-hour deep-dive call",
-        "Written technical assessment (10-15 pages)",
-        "Architecture recommendations",
-        "Tech stack evaluation",
-        "Roadmap priorities",
-        "Risk assessment & mitigation strategies",
+        "Current-state architecture and codebase review",
+        "Delivery bottleneck analysis and remediation plan",
+        "Risk assessment with priority-ranked actions",
+        "Clear implementation guidance for the next execution cycle",
       ],
-      time_commitment: "Delivered within 5 business days",
-      best_for: ["Founders who need clarity on their technical approach"],
-      button_text: "Get Your Audit",
-      upsell: "Many audit clients transition to ongoing advisory",
+      time_commitment: "Short, focused engagement",
+      best_for: [
+        "Teams inheriting complex codebases",
+        "Founders who need a second opinion before scaling",
+        "Products experiencing recurring delivery friction",
+      ],
+      button_text: "Request a Technical Audit",
     },
   ],
   comparison_table: {
-    headers: ["Feature", "Advisory", "Advisory + Execution", "MVP Build"],
+    headers: [
+      "Capability",
+      "Contract Engineering",
+      "Technical Advisory",
+      "Fractional CTO",
+    ],
     rows: [
       {
-        feature: "Strategy Calls",
-        values: ["2x / month", "Weekly", "Weekly"],
-      },
-      {
-        feature: "Hands-on Code",
+        feature: "Primary Outcome",
         values: [
-          <X className="text-destructive" />,
-          "10 hrs / month",
-          "Full Build",
+          "Shipped software",
+          "Higher-quality technical decisions",
+          "Aligned engineering leadership",
         ],
       },
       {
-        feature: "Architecture Review",
+        feature: "Hands-on Implementation",
+        values: ["High", "Low", "Medium"],
+      },
+      {
+        feature: "Architecture Direction",
+        values: ["With delivery context", "Focused reviews", "Continuous ownership"],
+      },
+      {
+        feature: "Team Support",
+        values: ["Pairing and reviews", "Decision support", "Mentorship + process design"],
+      },
+      {
+        feature: "Best Fit",
         values: [
-          <Check className="text-green-500! size-5" />,
-          <Check className="text-green-500! size-5" />,
-          <Check className="text-green-500! size-5" />,
+          "Execution bottlenecks",
+          "Critical decisions",
+          "Scaling team and roadmap",
         ],
-      },
-      {
-        feature: "Async Support",
-        values: ["Standard", "Priority (24hr)", "Priority"],
-      },
-      {
-        feature: "Hiring Support",
-        values: [
-          <Check className="text-green-500! size-5" />,
-          <Check className="text-green-500! size-5" />,
-          <X className="text-destructive" />,
-        ],
-      },
-      {
-        feature: "Code Review",
-        values: [
-          <X className="text-destructive" />,
-          <Check className="text-green-500! size-5" />,
-          "N/A",
-        ],
-      },
-      {
-        feature: "Ideal Stage",
-        values: ["Pre-Seed / Idea", "Seed / Early Build", "Ready to Launch"],
       },
     ],
   },
@@ -362,36 +396,36 @@ export const services = {
     {
       step: 1,
       title: "Discovery Call",
-      description: "30-minute chat to understand your needs (free)",
+      description: "Quick alignment on goals, constraints, and what success looks like",
     },
     {
       step: 2,
-      title: "Proposal",
-      description: "I'll send a clear proposal with scope and pricing",
+      title: "Scope & Plan",
+      description: "Define delivery model, responsibilities, and execution cadence",
     },
     {
       step: 3,
       title: "Start Fast",
-      description: "We can begin within 48 hours of agreement",
+      description: "Kick off with clear priorities and immediate implementation momentum",
     },
   ],
 
   faq: [
     {
-      q: "Why should I hire an advisor vs a full-time CTO?",
-      a: "A senior CTO costs $150k-250k/year + equity. I provide the same strategic guidance at a fraction of the cost, perfect for pre-seed/seed stage.",
+      q: "When should I choose contract engineering vs advisory?",
+      a: "Choose contract engineering when you need features shipped quickly. Choose advisory when your team is executing but needs stronger technical direction on architecture and roadmap trade-offs.",
     },
     {
-      q: "What if I need more hours than advisory includes?",
-      a: "We can upgrade to Fractional CTO or discuss custom arrangements. I'm flexible based on your stage.",
+      q: "Do you work with existing teams and codebases?",
+      a: "Yes. Most engagements involve integrating into active products, improving delivery quality, and unblocking roadmap work without disrupting current momentum.",
     },
     {
-      q: "Do you take equity?",
-      a: "For the right opportunity, yes. Let's discuss on our call.",
+      q: "Can engagements start small and expand later?",
+      a: "Absolutely. Many collaborations begin with a focused sprint or advisory scope, then expand into recurring contract engineering or fractional leadership.",
     },
     {
-      q: "What's your availability?",
-      a: "I'm in Pakistan (GMT+5), which means I work when US/Europe sleeps. Faster turnaround for async work.",
+      q: "How do you handle timezone overlap and communication?",
+      a: "I work remotely with teams across regions using structured async updates, clear ownership, and planned overlap windows for high-priority discussions.",
     },
   ],
 };

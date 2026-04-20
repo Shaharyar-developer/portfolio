@@ -28,7 +28,7 @@ export function ContactSection({ contact, resume }: ContactSectionProps) {
   return (
     <LandingSection
       heading="Let’s collaborate"
-      subheading="Open for consulting, partnerships, and advisory"
+      subheading="Available for contract engineering, advisory, and fractional CTO engagements"
     >
       <motion.div
         variants={contactVariant}
@@ -39,7 +39,8 @@ export function ContactSection({ contact, resume }: ContactSectionProps) {
       >
         <p className="max-w-2xl text-xl leading-relaxed text-muted-foreground">
           Reach out via email, schedule a call, or review the latest resume to
-          get a sense of how I architect collaborative AI products.
+          see how I approach software delivery, contract execution, and technical
+          leadership support.
         </p>
 
         <div className="flex flex-wrap gap-4">
