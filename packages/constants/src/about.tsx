@@ -194,7 +194,7 @@ export const about = {
     },
     {
       title: "Core Concepts of Operational Transformations",
-      url: "#",
+      url: "https://open-ot.shaharyar.dev/docs/concepts",
       description: "Understanding the theory behind real-time collaboration",
     },
   ],
