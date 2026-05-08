@@ -41,8 +41,6 @@ export function HeroSection({
     >
       <div className="space-y-10">
         <div className="space-y-8">
-        
-
           <div className="flex flex-col gap-4">
             <h1 className="text-5xl font-bold tracking-tighter text-foreground sm:text-7xl lg:text-8xl">
               {name}

@@ -8,6 +8,7 @@ import {
   HeroSection,
   ProjectsSection,
   SkillsetSection,
+  UiUxSection,
 } from "@/components/landing";
 
 export default function Page() {
@@ -27,6 +28,8 @@ export default function Page() {
         <HighlightsSection highlights={about.highlights} />
 
         <ProjectsSection projects={about.featured_projects} />
+
+        <UiUxSection />
 
         <SkillsetSection skillset={about.technical_expertise} />
 

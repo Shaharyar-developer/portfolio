@@ -18,10 +18,6 @@ export const about = {
       label: "Book a Strategy Call",
       href: "https://cal.com/shaharyar-dev",
     },
-    {
-      label: "View Services",
-      href: "/services",
-    },
   ],
   value_proposition: {
     headline: "Senior engineer who ships and leads",
@@ -31,7 +27,6 @@ export const about = {
       "Built a 250k LOC collaborative platform as a solo founder-engineer",
       "Designed and launched Kicklayer for structured client onboarding workflows",
       "1000+ beta users across real-time editing system",
-      "Former contractor: INTERPOL (Operation Storm Makers II) anti-human trafficking data analysis",
       "3+ years leading technical operations for national conferences",
     ],
   },
@@ -65,21 +60,6 @@ export const about = {
         "Qdrant",
         "WebSockets",
       ],
-    },
-    {
-      role: "Data Analysis Contractor",
-      organization: "INTERPOL",
-      period: "2023-2024",
-      type: "Contract",
-      description:
-        "Anti-human trafficking operations support (Operation Storm Makers II)",
-      achievements: [
-        "Designed data analysis pipelines for international operations",
-        "Processed and analyzed large-scale sensitive datasets",
-        "Worked under strict security and confidentiality requirements",
-        "Details classified under NDA",
-      ],
-      tech: ["Python", "Data Analysis", "Secure Systems"],
     },
     {
       role: "IT Director",

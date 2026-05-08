@@ -5,3 +5,4 @@ export { HeroSection } from "./hero-section";
 export { LandingSection } from "./landing-section";
 export { ProjectsSection } from "./projects-section";
 export { SkillsetSection } from "./skillset-section";
+export { UiUxSection } from "./uiux-section";
