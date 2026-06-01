@@ -65,9 +65,6 @@ export function HeroSection({
 
           <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
             {tagline}
-            <span className="block mt-4 font-mono text-xs uppercase tracking-widest text-muted-foreground/60">
-              Based in '{location}'
-            </span>
           </p>
         </div>
 
