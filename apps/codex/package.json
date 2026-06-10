@@ -1,0 +1,43 @@
+{
+  "name": "codex",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "source": "fumadocs-mdx source.config.ts .source",
+    "postinstall": "fumadocs-mdx source.config.ts .source",
+    "dev": "bun run source && next dev --turbopack --port 3002",
+    "build": "bun run source && next build",
+    "start": "next start",
+    "lint": "bun run source && eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "bun run source && tsc --noEmit"
+  },
+  "dependencies": {
+    "@workspace/ui": "workspace:*",
+    "fumadocs-core": "^16.9.3",
+    "fumadocs-mdx": "^15.0.11",
+    "fumadocs-ui": "16.9.3",
+    "katex": "^0.16.25",
+    "lucide-react": "^0.475.0",
+    "mermaid": "^11.12.1",
+    "next": "^16.0.10",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/mdx": "^2.0.13",
+    "@types/mermaid": "^9.2.0",
+    "@types/node": "^20.19.9",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "eslint": "^9.32.0",
+    "typescript": "^5.9.2"
+  }
+}

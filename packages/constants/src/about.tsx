@@ -164,12 +164,12 @@ export const about = {
   writing: [
     {
       title: "NOVA Design Philosophy",
-      url: "https://codex.novusatlas.org/blog/nova-design-philosophy",
+      url: "https://codex.shaharyar.dev/blog/nova-design-philosophy",
       description: "How I approached building a platform for creative writers",
     },
     {
       title: "A Technical Introspect to the Quality Checker",
-      url: "https://codex.novusatlas.org/blog/a-technical-introspect-to-the-quality-checker",
+      url: "https://codex.shaharyar.dev/blog/a-technical-introspect-to-the-quality-checker",
       description: "Deep dive into AI-powered content quality analysis",
     },
     {

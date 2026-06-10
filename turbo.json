@@ -1,6 +1,29 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "globalEnv": [
+    "AUTH_COOKIE_DOMAIN",
+    "BETTER_AUTH_SECRET",
+    "CRON_SECRET",
+    "DATABASE_URL",
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+    "GOOGLE_PICKER_API_KEY",
+    "GOOGLE_SHEETDUE_REDIRECT_URI",
+    "LABS_BASE_URL",
+    "NEXT_PUBLIC_LABS_BASE_URL",
+    "NODE_ENV",
+    "PLUNK_API_BASE_URL",
+    "PLUNK_FROM_EMAIL",
+    "PLUNK_SECRET_KEY",
+    "PLUNK_WEBHOOK_SECRET",
+    "POLAR_ACCESS_TOKEN",
+    "POLAR_SERVER",
+    "POLAR_SHEETDUE_PRODUCT_ID",
+    "POLAR_WEBHOOK_SECRET",
+    "TOKEN_ENCRYPTION_KEY",
+    "VERCEL_ENV"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
