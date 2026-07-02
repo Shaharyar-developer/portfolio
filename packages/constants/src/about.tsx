@@ -144,6 +144,7 @@ export const about = {
       ],
       links: {
         website: "https://recall.novusatlas.org",
+        case_study: "/projects/cutting-rag-cost",
       },
     },
     {
@@ -222,7 +223,7 @@ export const about = {
   writing: [
     {
       title: "Cutting Recall's RAG Cost Per Question From $0.10 to $0.04–0.06",
-      url: "https://codex.novusatlas.org/blog/cutting-rag-cost-per-question",
+      url: "/projects/cutting-rag-cost",
       description:
         "How Recall's agentic RAG loop got cheaper without a model swap: handle-based retrieval, opt-in reasoning, step budgets, and usage-derived pricing",
     },
@@ -276,7 +277,14 @@ export const about = {
     engagement:
       "Typical engagements: fixed-scope builds ($1.5k–8k) or ongoing hourly. I work async-friendly, overlapping US/EU mornings.",
   },
-  testimonials: [],
+  testimonials: [
+    {
+      quote:
+        "Incomparably better than asking an assistant to search the Shadow Slave wiki.",
+      author: "A Shadow Slave fanfiction writer",
+      context: "on Recall",
+    },
+  ],
   cta: {
     headline: "Need an engineer who can own hard problems?",
     subheadline:

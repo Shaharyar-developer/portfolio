@@ -1,10 +1,7 @@
----
-title: "Cutting Recall's RAG Cost Per Question From $0.10 to $0.04–0.06"
-description: "A solo dev's teardown of how Recall's agentic RAG loop got cheaper: handle-based retrieval, progressive disclosure, opt-in reasoning, step budgets, and usage-derived pricing. No model swap required."
-date: "2026-07-02"
-author: "Shaharyar"
-tags: ["rag", "llm", "cost", "agents", "retrieval"]
-draft: false
+# Cutting Recall's RAG Cost Per Question From $0.10 to $0.04–0.06
+
+**A teardown of how Recall's agentic RAG loop got cheaper — handle-based retrieval, progressive disclosure, opt-in reasoning, step budgets, and usage-derived pricing. No model swap required.**
+
 ---
 
 > I cut my RAG agent's cost per question from about ten cents to four–six cents. Not by switching to a cheaper model. The model was already cheap. The waste was mostly architectural.
@@ -13,10 +10,7 @@ I run [Recall](https://recall.novusatlas.org), a research agent for fiction cano
 
 When I first got deep-reasoning questions working end to end, each one cost me around ten cents. Users pay in credits, and at ten cents a question the margin math just doesn't work for a product aimed at fanfiction writers. So I spent a while attacking the cost and got it down to four to six cents per question. Not by switching to a cheaper model. The model was already cheap.
 
-<Callout title="The one rule" type="tip">
-  Raw source text never sits in the model's context unless it has to. Almost
-  every optimization below is a consequence of that.
-</Callout>
+> **The one rule.** Raw source text never sits in the model's context unless it has to. Almost every optimization below is a consequence of that.
 
 ## Why agentic loops get expensive
 
@@ -47,10 +41,10 @@ flowchart TD
     S["researchSearch"] --> H["Handles + ~360-char snippets"]
     H --> D1{"Enough to answer?"}
     D1 -->|"yes"| A["Answer + cite chapters"]
-    D1 -->|"need evidence"| P["getRelevantPassages<br/>scored paragraph windows"]
+    D1 -->|"need evidence"| P["getRelevantPassages / scored paragraph windows"]
     P --> D2{"Enough now?"}
     D2 -->|"yes"| A
-    D2 -->|"still not enough"| F["getFullUnit<br/>whole chapter · expensive"]
+    D2 -->|"still not enough"| F["getFullUnit / whole chapter · expensive"]
     F --> A
 ```
 
@@ -88,13 +82,7 @@ Usage-derived pricing means every optimization above flows straight through to w
 
 The spoiler boundary — the feature the whole product hangs on — is enforced in the prompt, not in the query layer. The user's furthest-read position gets injected into the system prompt, and the model has a dedicated refusal tool it invokes when a question would cross the line. Retrieval itself can technically surface future-chapter content. Correctness relies on the model choosing not to use it.
 
-<Callout title="Not the safe design, the pragmatic one" type="warning">
-  A hard sequence filter at the vector store would prevent leaks outright, and a
-  determined prompt injection could in principle beat the current design. The
-  prompt-enforced version ships and handles the honest-user case well, and the
-  hard filter has real costs of its own around how evidence gets scored across
-  the boundary. I'm not pretending it's the maximally safe option.
-</Callout>
+> **Not the safe design, the pragmatic one.** A hard sequence filter at the vector store would prevent leaks outright, and a determined prompt injection could in principle beat the current design. The prompt-enforced version ships and handles the honest-user case well, and the hard filter has real costs of its own around how evidence gets scored across the boundary. I'm not pretending it's the maximally safe option.
 
 ## Where it landed
 
@@ -114,26 +102,17 @@ If you're building an agentic RAG loop and your costs look scary, read your per-
 
 ## FAQ
 
-<Cards>
-  <Card title="Did you switch to a cheaper model to get the savings?">
-    No. The model was already cheap (`deepseek-v4-flash`). Every saving here came
-    from sending fewer and smaller tokens per call and from bounding the loop —
-    the model picker was never the lever.
-  </Card>
+**Did you switch to a cheaper model to get the savings?**
 
-  <Card title="Doesn't returning handles instead of text hurt answer quality?">
-    Not in any way I could measure. The ~360-character snippets carry enough
-    signal for relevance judgments, and the model requests the full text when it
-    genuinely needs it. Most search results never get expanded at all.
-  </Card>
+No. The model was already cheap (`deepseek-v4-flash`). Every saving here came from sending fewer and smaller tokens per call and from bounding the loop — the model picker was never the lever.
 
-  <Card title="Why is the spoiler boundary enforced in the prompt, not the query?">
-    Pragmatism. A hard sequence filter at the vector store would prevent leaks
-    outright, but it has real costs around how evidence gets scored across the
-    boundary. The prompt-enforced version ships today and handles the honest-user
-    case well.
-  </Card>
-</Cards>
+**Doesn't returning handles instead of text hurt answer quality?**
+
+Not in any way I could measure. The ~360-character snippets carry enough signal for relevance judgments, and the model requests the full text when it genuinely needs it. Most search results never get expanded at all.
+
+**Why is the spoiler boundary enforced in the prompt, not the query?**
+
+Pragmatism. A hard sequence filter at the vector store would prevent leaks outright, but it has real costs around how evidence gets scored across the boundary. The prompt-enforced version ships today and handles the honest-user case well.
 
 ---
 

@@ -1,9 +1,19 @@
 import { Separator } from "@workspace/ui/components/separator";
 import type { MDXComponents } from "mdx/types";
+import { Children, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Mermaid } from "./components/mdx/mermaid";
 import { Code } from "./components/mdx/code";
+
+// The MDX (GFM) compiler emits whitespace-only text nodes between table
+// structural elements. React forbids those as direct children of
+// table/thead/tbody/tr, so strip them to avoid hydration warnings.
+function withoutWhitespace(children: ReactNode) {
+  return Children.toArray(children).filter(
+    (child) => !(typeof child === "string" && child.trim() === "")
+  );
+}
 
 const components: MDXComponents = {
   hr: (props) => (
@@ -68,8 +78,19 @@ const components: MDXComponents = {
     />
   ),
   img: (props) => <Image width={700} height={350} className="" {...props} />,
-  table: (props) => (
-    <table className="w-full my-4 table-auto border-collapse" {...props} />
+  table: ({ children, ...props }) => (
+    <table className="w-full my-4 table-auto border-collapse" {...props}>
+      {withoutWhitespace(children)}
+    </table>
+  ),
+  thead: ({ children, ...props }) => (
+    <thead {...props}>{withoutWhitespace(children)}</thead>
+  ),
+  tbody: ({ children, ...props }) => (
+    <tbody {...props}>{withoutWhitespace(children)}</tbody>
+  ),
+  tr: ({ children, ...props }) => (
+    <tr {...props}>{withoutWhitespace(children)}</tr>
   ),
   th: (props) => <th className=" px-4 py-2 font-mono text-left" {...props} />,
   td: (props) => (
