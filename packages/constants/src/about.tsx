@@ -277,14 +277,7 @@ export const about = {
     engagement:
       "Typical engagements: fixed-scope builds ($1.5k–8k) or ongoing hourly. I work async-friendly, overlapping US/EU mornings.",
   },
-  testimonials: [
-    {
-      quote:
-        "Incomparably better than asking an assistant to search the Shadow Slave wiki.",
-      author: "A Shadow Slave fanfiction writer",
-      context: "on Recall",
-    },
-  ],
+  testimonials: [],
   cta: {
     headline: "Need an engineer who can own hard problems?",
     subheadline:

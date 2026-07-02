@@ -10,7 +10,6 @@ import {
   ProjectsSection,
   ServicesSection,
   SkillsetSection,
-  TestimonialsSection,
   UiUxSection,
 } from "@/components/landing";
 
@@ -33,8 +32,6 @@ export default function Page() {
         <div id="projects">
           <ProjectsSection projects={about.featured_projects} />
         </div>
-
-        <TestimonialsSection testimonials={about.testimonials} />
 
         <ServicesSection services={about.services_summary} />
 
