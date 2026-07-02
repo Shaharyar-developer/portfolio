@@ -89,6 +89,13 @@ export function encryptToken(value?: string | null) {
     .join(".");
 }
 
+export function hasUsableRefreshToken(input: {
+  refreshToken?: string | null;
+  existingEncryptedRefreshToken?: string | null;
+}) {
+  return Boolean(input.refreshToken || input.existingEncryptedRefreshToken);
+}
+
 export function decryptToken(value?: string | null) {
   if (!value) {
     return null;

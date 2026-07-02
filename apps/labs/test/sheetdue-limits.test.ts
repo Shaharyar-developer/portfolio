@@ -1,6 +1,11 @@
 import { describe, expect, test } from "bun:test";
 
-import { canActivateSheet, canSendReminder } from "@/lib/sheetdue/limits";
+import {
+  activeSheetCountAfterStatusChange,
+  canActivateAfterStatusChange,
+  canActivateSheet,
+  canSendReminder,
+} from "@/lib/sheetdue/limits";
 
 describe("SheetDue usage limits", () => {
   test("free plan allows one active sheet", () => {
@@ -40,6 +45,44 @@ describe("SheetDue usage limits", () => {
       canSendReminder({
         plan: "free",
         usage: { activeSheets: 1, remindersSent: 50 },
+      }),
+    ).toBe(false);
+  });
+
+  test("free plan can keep an existing active sheet active", () => {
+    expect(
+      activeSheetCountAfterStatusChange({
+        activeSheets: 1,
+        currentStatus: "active",
+        nextStatus: "active",
+      }),
+    ).toBe(1);
+
+    expect(
+      canActivateAfterStatusChange({
+        plan: "free",
+        activeSheets: 1,
+        currentStatus: "active",
+        nextStatus: "active",
+      }),
+    ).toBe(true);
+  });
+
+  test("free plan cannot activate a second sheet", () => {
+    expect(
+      activeSheetCountAfterStatusChange({
+        activeSheets: 1,
+        currentStatus: "paused",
+        nextStatus: "active",
+      }),
+    ).toBe(2);
+
+    expect(
+      canActivateAfterStatusChange({
+        plan: "free",
+        activeSheets: 1,
+        currentStatus: "paused",
+        nextStatus: "active",
       }),
     ).toBe(false);
   });

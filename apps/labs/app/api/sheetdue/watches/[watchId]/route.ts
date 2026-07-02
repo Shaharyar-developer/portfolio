@@ -20,9 +20,21 @@ export async function PATCH(
     const { watchId } = await context.params;
     const input = patchSchema.parse(await request.json());
     const plan = await getUserSheetduePlan(user.id);
+    const existing = await db.query.sheetdueSheetWatches.findFirst({
+      where: and(
+        eq(schema.sheetdueSheetWatches.id, watchId),
+        eq(schema.sheetdueSheetWatches.userId, user.id),
+      ),
+    });
+
+    if (!existing) {
+      throw new Error("Sheet watch not found.");
+    }
 
     if (input.status === "active") {
-      await assertCanActivateSheet(user.id);
+      await assertCanActivateSheet(user.id, {
+        excludeWatchId: existing.id,
+      });
     }
 
     const [watch] = await db

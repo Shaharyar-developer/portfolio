@@ -2,11 +2,13 @@
 
 import { about } from "@workspace/constants";
 import {
+  AboutSection,
   BlogSection,
   ContactSection,
   HighlightsSection,
   HeroSection,
   ProjectsSection,
+  ServicesSection,
   SkillsetSection,
   UiUxSection,
 } from "@/components/landing";
@@ -21,21 +23,32 @@ export default function Page() {
           tagline={about.tagline}
           location={about.location}
           hero_cta={about.hero_cta}
-          proof_points={about.value_proposition.proof_points}
+          proof_bar={about.proof_bar}
           availability={about.availability}
         />
 
         <HighlightsSection highlights={about.highlights} />
 
-        <ProjectsSection projects={about.featured_projects} />
+        <div id="projects">
+          <ProjectsSection projects={about.featured_projects} />
+        </div>
+
+        <ServicesSection services={about.services_summary} />
 
         <UiUxSection />
 
         <SkillsetSection skillset={about.technical_expertise} />
 
+        <AboutSection
+          paragraphs={about.about_paragraphs}
+          personal={about.about_personal}
+        />
+
         <BlogSection blogs={about.writing} />
 
-        <ContactSection contact={about.contact} resume={about.resume} />
+        <div id="contact">
+          <ContactSection contact={about.contact} resume={about.resume} />
+        </div>
       </div>
     </div>
   );

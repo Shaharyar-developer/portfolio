@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowRight, Mail, FileText } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { Button } from "@workspace/ui/components/button";
 
@@ -17,7 +17,7 @@ interface HeroSectionProps {
   tagline: string;
   location: string;
   hero_cta: { label: string; href: string }[];
-  proof_points?: string[];
+  proof_bar?: { label: string; href: string }[];
   availability?: string;
 }
 
@@ -27,7 +27,7 @@ export function HeroSection({
   tagline,
   location,
   hero_cta,
-  proof_points,
+  proof_bar,
   availability,
 }: HeroSectionProps) {
   return (
@@ -49,17 +49,6 @@ export function HeroSection({
               <p className="text-xl font-mono text-muted-foreground sm:text-2xl">
                 &gt; {title}
               </p>
-
-              {proof_points && (
-                <ul className="flex flex-col gap-2 font-mono text-sm sm:text-base text-muted-foreground/80">
-                  {proof_points.slice(0, 3).map((point, idx) => (
-                    <li key={idx} className="flex items-center gap-3">
-                      <span className="flex h-1.5 w-1.5 rounded-full bg-primary/60" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              )}
             </div>
           </div>
 
@@ -83,33 +72,37 @@ export function HeroSection({
               </Link>
             </Button>
           ))}
-          <Button
-            variant="ghost"
-            size="default"
-            className="bg-transparent backdrop-blur"
-            asChild
-          >
-            <Link href="mailto:shaharyar321321@gmail.com">
-              Email Me <Mail className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-          <Button
-            variant="ghost"
-            size="default"
-            className="bg-transparent backdrop-blur"
-            asChild
-          >
-            <Link href="/resume.pdf" target="_blank">
-              View Resume <FileText className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
         </div>
 
-        <div className="pt-8 border-t border-border/40">
-          <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground/60">
-            Trusted by universities, startups & early-author platforms
-          </p>
-        </div>
+        {proof_bar && proof_bar.length > 0 && (
+          <div className="pt-8 border-t border-border/40">
+            <ul className="flex flex-col gap-3 font-mono text-sm text-muted-foreground/80 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-2 sm:gap-y-3">
+              {proof_bar.map((item, idx) => (
+                <li key={item.href} className="flex items-center gap-2">
+                  <Link
+                    href={item.href}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={
+                      item.href.startsWith("http") ? "noreferrer" : undefined
+                    }
+                    className="group inline-flex items-center gap-1 text-muted-foreground/80 transition-colors hover:text-foreground"
+                  >
+                    {item.label}
+                    <ArrowRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
+                  </Link>
+                  {idx < proof_bar.length - 1 && (
+                    <span
+                      aria-hidden
+                      className="hidden text-muted-foreground/30 sm:inline"
+                    >
+                      ·
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </motion.div>
   );

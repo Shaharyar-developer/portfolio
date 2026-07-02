@@ -167,9 +167,18 @@ export async function POST(request: Request) {
         intro: input.template.intro,
         closing: input.template.closing,
       }));
+    const existingWatch = await db.query.sheetdueSheetWatches.findFirst({
+      where: and(
+        eq(schema.sheetdueSheetWatches.userId, user.id),
+        eq(schema.sheetdueSheetWatches.spreadsheetId, input.spreadsheetId),
+        eq(schema.sheetdueSheetWatches.sheetId, input.sheetId),
+      ),
+    });
 
     if (input.status === "active") {
-      await assertCanActivateSheet(user.id);
+      await assertCanActivateSheet(user.id, {
+        excludeWatchId: existingWatch?.id,
+      });
     }
 
     const [watch] = await db

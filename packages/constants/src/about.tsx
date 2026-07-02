@@ -1,9 +1,9 @@
 export const about = {
   name: "M. Shaharyar",
   title:
-    "Founding Engineer | Real-Time Systems, Applied AI & Product Architecture",
+    "I build production AI systems — RAG pipelines, LLM integration, and semantic search that ship.",
   tagline:
-    "I build technically demanding products end to end, from real-time collaboration and semantic search to AI-native SaaS workflows and developer infrastructure.",
+    "Solo engineer. I take AI products from schema to deployed, end to end: vector search over millions of chunks, multi-stage LLM pipelines, real-time infrastructure. Live products below — click them.",
   location: "Pakistan",
   availability:
     "Available for remote founding engineer, product engineer, applied AI, and contract-to-hire roles",
@@ -16,10 +16,38 @@ export const about = {
   },
   hero_cta: [
     {
-      label: "View Resume",
-      href: "/resume.pdf",
+      label: "See Recall live",
+      href: "https://recall.novusatlas.org",
+    },
+    {
+      label: "Read the engineering write-up",
+      href: "https://codex.novusatlas.org/blog/a-technical-introspect-to-the-quality-checker",
+    },
+    {
+      label: "Hire me",
+      href: "#contact",
     },
   ],
+  proof_bar: [
+    {
+      label: "Recall — live RAG product, in production now",
+      href: "https://recall.novusatlas.org",
+    },
+    {
+      label: "OpenOT — open-source OT framework",
+      href: "https://github.com/Shaharyar-developer/open-ot",
+    },
+    {
+      label: "NOVA — collaborative writing platform, built solo over 2+ years",
+      href: "/projects/nova",
+    },
+  ],
+  about_paragraphs: [
+    "I'm a solo engineer. I build entire systems end to end — schema, backend, infrastructure, the model pipeline, and the interface a user actually touches — because I like owning the whole thing and I ship faster when nothing gets thrown over a wall.",
+    "Most of my work lives at the hard edges: retrieval that has to be correct, sync that has to converge, pipelines that have to stay cheap and fast in production. I care about systems that keep working after launch, not demos.",
+  ],
+  about_personal:
+    "Outside the terminal I'm slowly building a JDM restomod — same instinct as the software: take something real, understand every part, and see the long project through.",
   value_proposition: {
     headline: "Founding engineer who ships complex systems",
     subheadline:
@@ -95,16 +123,40 @@ export const about = {
   ],
   featured_projects: [
     {
-      id: "nova",
-      name: "Novus Atlas (NOVA)",
-      type: "Production Platform",
-      tagline: "Collaborative writing platform built from scratch",
+      id: "recall",
+      name: "Recall",
+      type: "Flagship · Live RAG Product",
+      tagline: "Spoiler-aware RAG for fiction canon · live at recall.novusatlas.org",
       description:
-        "A collaborative writing ecosystem with real-time editing, branch-based story versioning, semantic content discovery, and AI-assisted analysis.",
+        "A continuity-checking and canon research tool for fiction writers. Semantic search over millions of indexed text chunks with chapter-aware spoiler boundaries — queries only ever retrieve from canon the user has read.",
       problem:
-        "Long-form fiction writers need better tools for collaboration, versioning, search, and large-project navigation.",
+        "Retrieval has to respect a per-user \"read up to chapter N\" cutoff — a query can never surface canon the reader hasn't reached yet.",
       solution:
-        "Built an end-to-end platform combining Operational Transformation, semantic search, Rust-powered analysis pipelines, and product-specific authoring workflows.",
+        "Chunk-level provenance so retrieval respects the spoiler boundary; an embedding pipeline for long-form serialized fiction; credit-metered generation; full product built and deployed solo.",
+      tech: [
+        "TypeScript",
+        "Next.js",
+        "Qdrant",
+        "Qwen3-Embedding-8B",
+        "Multi-provider LLM (failover)",
+        "Radix",
+        "Tailwind",
+      ],
+      links: {
+        website: "https://recall.novusatlas.org",
+      },
+    },
+    {
+      id: "nova",
+      name: "NOVA (Novus Atlas)",
+      type: "Real-Time Platform",
+      tagline: "Real-time collaborative writing platform · private beta",
+      description:
+        "Collaborative fiction platform with an operational-transformation editor, custom Rust NLP engine, and vector-powered search. Built solo over two years.",
+      problem:
+        "Long-form collaborative fiction needs conflict-free concurrent editing, fast search across large manuscripts, and heavy NLP — all in one product.",
+      solution:
+        "OT convergence under concurrent editing; sub-100ms sync at hundreds of concurrent sessions; Rust services alongside a TypeScript product layer.",
       impact: [
         "1,000+ beta users",
         "500+ concurrent collaborators sustained at <80 ms p95 sync latency",
@@ -125,57 +177,15 @@ export const about = {
       links: {
         case_study: "/projects/nova",
       },
-      lessons_learned: [
-        "I scoped the platform into independently deployable modules to keep solo delivery fast without sacrificing reliability.",
-        "I designed collaboration flows to degrade gracefully under latency spikes and reconnect scenarios.",
-        "I balanced shipping velocity with maintainability by enforcing typed contracts and operational observability from day one.",
-        "I validated roadmap decisions with live author feedback loops to avoid over-building features no one needed.",
-      ],
-    },
-    {
-      id: "kicklayer",
-      name: "Kicklayer",
-      type: "Commercial SaaS",
-      tagline: "Client onboarding and asset collection platform for agencies",
-      description:
-        "A structured client-onboarding platform for collecting assets, credentials, briefs, and approvals through secure magic-link portals.",
-      problem:
-        "Agencies lose delivery time chasing incomplete files, missing credentials, unclear requirements, and scattered client communication.",
-      solution:
-        "Built a schema-driven intake workflow with passwordless client access, autosave, adaptive reminders, validation checks, secure credential collection, and authenticated export packages.",
-      impact: [
-        "Reduced onboarding follow-up workload by 61%",
-        "Shortened asset-collection timelines by 54%",
-        "Passwordless portal with autosave and drag-and-drop uploads",
-        "AI-assisted asset checks and auto-generated project briefs",
-        "Granular audit logs for views, uploads, rejections, replacements, and exports",
-      ],
-      tech: [
-        "TypeScript",
-        "Next.js",
-        "PostgreSQL",
-        "Workflow Automation",
-        "Secure File Processing",
-        "AES-256-GCM",
-        "Audit Logging",
-        "AI Workflows",
-      ],
-      links: {
-        website: "https://kicklayer.com",
-      },
-      lessons_learned: [
-        "Reducing client friction at the point of submission drives more value than adding configuration complexity too early.",
-        "Structured intake schemas outperform free-form requests for downstream design and engineering quality.",
-        "Auditability and visible status tracking eliminate avoidable coordination loops between teams and clients.",
-      ],
     },
     {
       id: "open-ot",
       name: "OpenOT",
-      type: "Open Source Library",
-      tagline: "Operational Transformation engine for real-time collaboration",
+      type: "Open Source",
+      tagline:
+        "Open-source operational transformation framework · GitHub",
       description:
-        "Framework-agnostic OT engine for collaborative editors, built with state-machine transforms, pluggable transports, storage adapters, and React/Lexical integration paths.",
+        "The OT engine extracted from NOVA, open-sourced. Framework-agnostic, with state-machine transforms, pluggable transports, storage adapters, and React/Lexical integration paths.",
       tech: [
         "TypeScript",
         "WebSockets",
@@ -191,28 +201,31 @@ export const about = {
       status: "Active development",
     },
     {
-      id: "architect",
-      name: "The Architect Engine",
-      type: "AI-Native Product",
-      tagline:
-        "Structured narrative engine with model routing and persistent state",
+      id: "kicklayer",
+      name: "Kicklayer",
+      type: "Commercial SaaS",
+      tagline: "Client onboarding platform for agencies",
       description:
-        "An AI-native interactive narrative platform featuring adaptive story interviews, typed structured generation, branching scenarios, persistent chronicles, retry pipelines, and model routing.",
+        "Multi-tenant client-onboarding SaaS — schema-driven intake, passwordless portals, secure credential exchange, and AI-assisted asset checks. Evidence of shipping breadth.",
       tech: [
         "TypeScript",
-        "LLM Orchestration",
-        "Structured Generation",
-        "Model Routing",
-        "Prompt Architecture",
-        "Persistent State",
+        "Next.js",
+        "PostgreSQL",
+        "AES-256-GCM",
+        "AI Workflows",
       ],
       links: {
-        website: "https://architect.novusatlas.org",
+        website: "https://kicklayer.com",
       },
-      status: "Implemented",
     },
   ],
   writing: [
+    {
+      title: "Cutting Recall's RAG Cost Per Question From $0.10 to $0.04–0.06",
+      url: "https://codex.novusatlas.org/blog/cutting-rag-cost-per-question",
+      description:
+        "How Recall's agentic RAG loop got cheaper without a model swap: handle-based retrieval, opt-in reasoning, step budgets, and usage-derived pricing",
+    },
     {
       title: "NOVA Design Philosophy",
       url: "https://codex.novusatlas.org/blog/nova-design-philosophy",
@@ -251,6 +264,17 @@ export const about = {
       "Content and Publishing Platforms",
       "B2B SaaS",
     ],
+  },
+  services_summary: {
+    heading: "What I take on",
+    items: [
+      "RAG systems: ingestion, chunking, embedding, retrieval, evaluation — from zero to production",
+      "LLM integration: multi-stage pipelines, structured output, streaming, provider failover",
+      "Semantic search over large or messy corpora",
+      "Real-time and collaborative features (OT, presence, sync)",
+    ],
+    engagement:
+      "Typical engagements: fixed-scope builds ($1.5k–8k) or ongoing hourly. I work async-friendly, overlapping US/EU mornings.",
   },
   testimonials: [],
   cta: {

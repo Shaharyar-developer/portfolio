@@ -311,7 +311,7 @@ export function verifyPlunkWebhook(request: Request) {
   const secret = process.env.PLUNK_WEBHOOK_SECRET;
 
   if (!secret) {
-    return true;
+    return process.env.NODE_ENV === "development";
   }
 
   const authHeader = request.headers.get("authorization");

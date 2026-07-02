@@ -8,16 +8,16 @@ import {
   BellRing,
   CalendarClock,
   CheckCircle2,
+  ClipboardList,
   Database,
   FileSpreadsheet,
   KeyRound,
   MailCheck,
+  ReceiptText,
   RefreshCw,
-  Search,
   ShieldCheck,
   Sheet,
   Sparkles,
-  Webhook,
   type LucideIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
@@ -27,21 +27,80 @@ const plans = [
   {
     name: "Free",
     price: "$0",
-    cadence: "Daily scans",
+    cadence: "Daily scan",
     activeSheets: "1",
-    reminders: "50",
+    reminders: "25",
     scan: "Daily",
-    bestFor: "A single personal or admin tracker",
+    bestFor: "Try one client tracker",
+  },
+  {
+    name: "Starter",
+    price: "$5/mo",
+    cadence: "Daily scan",
+    activeSheets: "3",
+    reminders: "250",
+    scan: "Daily",
+    bestFor: "Freelancers with a few active sheets",
   },
   {
     name: "Pro",
-    price: "$19/mo",
-    cadence: "Hourly scans",
+    price: "$15/mo",
+    cadence: "Hourly scan",
     activeSheets: "Unlimited",
     reminders: "2,500",
     scan: "Hourly",
-    bestFor: "Recurring operating sheets with real volume",
+    bestFor: "Small agencies running follow-ups every day",
   },
+  {
+    name: "Early lifetime",
+    price: "$49",
+    cadence: "One-time",
+    activeSheets: "Limited",
+    reminders: "Early access",
+    scan: "Daily",
+    bestFor: "Founding users while the product is new",
+  },
+];
+
+const exampleSheetRows = [
+  ["ACME", "Send invoice follow-up", "Jun 18", "you@email.com", "Open"],
+  ["Nova Ltd", "Collect logo files", "Jun 20", "client@email.com", "Waiting"],
+  ["BlueCo", "Contract renewal", "Jun 25", "ops@email.com", "Open"],
+];
+
+const useCases = [
+  "Client document requests",
+  "Unpaid invoice follow-ups",
+  "Proposal follow-ups",
+  "Approval reminders",
+  "Renewal reminders",
+  "Internal client-task deadlines",
+];
+
+const templates = [
+  {
+    title: "Client Follow-Up Tracker",
+    body: "Track open client asks, due dates, recipients, and status in one starter sheet.",
+    icon: ClipboardList,
+  },
+  {
+    title: "Invoice Reminder Tracker",
+    body: "Keep invoice follow-ups and payment nudges from disappearing between projects.",
+    icon: ReceiptText,
+  },
+  {
+    title: "Document Collection Tracker",
+    body: "Collect files, approvals, and missing client assets without morning sheet checks.",
+    icon: FileSpreadsheet,
+  },
+];
+
+const reliabilityItems = [
+  "Sorting rows will not duplicate reminders.",
+  "Completed rows are skipped.",
+  "Repeated scans do not send the same email twice.",
+  "Every sent reminder gets a delivery record.",
+  "You can pause a sheet anytime.",
 ];
 
 const reminderDiagramItems: Array<{
@@ -58,155 +117,25 @@ const sectionFrameClass = "min-h-svh px-5 py-16 text-zinc-950 md:py-20";
 const sectionInnerClass =
   "mx-auto flex min-h-[calc(100svh-8rem)] max-w-6xl flex-col justify-center";
 
-function WorkflowCanvas() {
-  return (
-    <div className="mt-12 overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-2xl shadow-zinc-300/40">
-      <div className="flex items-center justify-between border-b border-zinc-200 px-5 py-4">
-        <div className="flex items-center gap-2">
-          <div className="flex size-8 items-center justify-center rounded-lg bg-zinc-950 text-white">
-            <Search className="size-4" />
-          </div>
-          <div>
-            <p className="text-sm font-semibold">New SheetDue watch</p>
-            <p className="text-xs text-zinc-500">No spreadsheet IDs required</p>
-          </div>
-        </div>
-        <Badge variant="outline" className="rounded-md">
-          Google connected
-        </Badge>
-      </div>
-      <div className="grid min-h-[440px] gap-0 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="border-b border-zinc-200 p-5 lg:border-b-0 lg:border-r">
-          <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-            Drive search
-          </p>
-          <div className="mt-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-3">
-            <div className="flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-500">
-              <Search className="size-4" />
-              Search sheets and Excel files...
-            </div>
-            <div className="mt-3 grid gap-2">
-              {[
-                ["Operations Tracker", "Google Sheet", "Updated today"],
-                ["Client Renewals.xlsx", "Excel workbook", "Import copy"],
-                ["Invoice Follow-ups", "Google Sheet", "12 tabs"],
-              ].map(([name, type, meta]) => (
-                <div
-                  key={name}
-                  className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-xl border border-zinc-200 bg-white px-3 py-3"
-                >
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold">{name}</p>
-                    <p className="text-xs text-zinc-500">{type}</p>
-                  </div>
-                  <span className="text-xs font-medium text-zinc-500">
-                    {meta}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="mt-5 grid grid-cols-3 gap-2 text-center text-xs">
-            <div className="rounded-xl bg-zinc-100 px-3 py-2">
-              <p className="font-semibold">Sheet</p>
-              <p className="text-zinc-500">native</p>
-            </div>
-            <div className="rounded-xl bg-zinc-100 px-3 py-2">
-              <p className="font-semibold">.xlsx</p>
-              <p className="text-zinc-500">copy</p>
-            </div>
-            <div className="rounded-xl bg-zinc-100 px-3 py-2">
-              <p className="font-semibold">Tabs</p>
-              <p className="text-zinc-500">preview</p>
-            </div>
-          </div>
-        </div>
-        <div className="grid content-between gap-5 p-5">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-              Mapping review
-            </p>
-            <div className="mt-4 grid gap-3 md:grid-cols-3">
-              {[
-                ["Task", "A - Task", "Header + text samples"],
-                ["Due date", "B - Due date", "ISO date detected"],
-                ["Recipient", "C - Owner Email", "Email samples found"],
-              ].map(([label, value, reason]) => (
-                <div
-                  key={label}
-                  className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4"
-                >
-                  <div className="mb-5 flex items-center justify-between">
-                    <p className="text-sm font-semibold">{label}</p>
-                    <Badge className="rounded-md bg-emerald-100 text-emerald-700 hover:bg-emerald-100">
-                      Auto
-                    </Badge>
-                  </div>
-                  <p className="text-base font-semibold">{value}</p>
-                  <p className="mt-2 text-xs leading-5 text-zinc-500">
-                    {reason}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="rounded-2xl border border-zinc-200 bg-zinc-950 p-4 text-white">
-            <div className="grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
-              <div>
-                <p className="text-sm font-semibold">Ready to activate</p>
-                <p className="mt-1 text-xs text-zinc-400">
-                  3 days before + due date reminders, skipping completed rows.
-                </p>
-              </div>
-              <Button className="bg-white text-black hover:bg-zinc-200">
-                Save monitor
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function UseCaseSheet() {
-  const rows = [
-    ["Client docs", "Collect W-9", "2026-06-13", "ops@example.com", "Open"],
-    ["Invoices", "Follow up ACME", "2026-06-17", "ap@example.com", "Open"],
-    [
-      "Contracts",
-      "Renew vendor MSA",
-      "2026-06-24",
-      "legal@example.com",
-      "Open",
-    ],
-    [
-      "Compliance",
-      "File quarterly report",
-      "2026-06-30",
-      "admin@example.com",
-      "Done",
-    ],
-  ];
-
+function ExampleSheet() {
   return (
     <div className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-2xl shadow-zinc-300/40">
-      <div className="flex items-center justify-between border-b border-zinc-200 px-5 py-4">
+      <div className="flex flex-col gap-3 border-b border-zinc-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm font-semibold">Common operating sheets</p>
+          <p className="text-sm font-semibold">Example client follow-up sheet</p>
           <p className="text-xs text-zinc-500">
-            Same reminder engine, different row labels
+            The exact columns SheetDue needs: task, due date, recipient, and status.
           </p>
         </div>
         <Badge variant="outline" className="rounded-md">
-          Due date + email + status
+          No Apps Script required
         </Badge>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[780px] text-left text-sm">
+        <table className="w-full min-w-[760px] text-left text-sm">
           <thead>
             <tr className="border-b border-zinc-200 bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500">
-              {["Sheet type", "Task", "Due date", "Recipient", "Status"].map(
+              {["Client", "Task", "Due Date", "Owner Email", "Status"].map(
                 (header) => (
                   <th key={header} className="px-5 py-4 font-semibold">
                     {header}
@@ -216,7 +145,7 @@ function UseCaseSheet() {
             </tr>
           </thead>
           <tbody>
-            {rows.map((row) => (
+            {exampleSheetRows.map((row) => (
               <tr
                 key={row.join("-")}
                 className="border-b border-zinc-100 last:border-b-0"
@@ -226,7 +155,8 @@ function UseCaseSheet() {
                     <span
                       className={cn(
                         index === 0 && "font-semibold",
-                        cell === "Done" && "text-emerald-600",
+                        cell === "Waiting" && "text-amber-700",
+                        cell === "Open" && "text-emerald-700",
                       )}
                     >
                       {cell}
@@ -238,13 +168,63 @@ function UseCaseSheet() {
           </tbody>
         </table>
       </div>
+      <div className="grid gap-0 border-t border-zinc-200 bg-zinc-950 text-white md:grid-cols-3">
+        {[
+          "Reminder email sent 3 days before due date",
+          "Reminder email sent on the due date",
+          "Overdue reminders repeat every 7 days until Status = Done",
+        ].map((item) => (
+          <div key={item} className="border-b border-white/10 p-5 last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
+            <CheckCircle2 className="size-4 text-emerald-300" />
+            <p className="mt-3 text-sm font-semibold leading-6">{item}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function UseCaseSheet() {
+  return (
+    <div className="grid gap-3 sm:grid-cols-2">
+      {useCases.map((useCase) => (
+        <div
+          key={useCase}
+          className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm"
+        >
+          <CheckCircle2 className="size-4 text-emerald-600" />
+          <p className="mt-4 font-semibold">{useCase}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TemplateLibrary() {
+  return (
+    <div className="mt-10 grid gap-4 lg:grid-cols-3">
+      {templates.map(({ title, body, icon: Icon }) => (
+        <div
+          key={title}
+          className="rounded-[1.5rem] border border-zinc-200 bg-white p-6 shadow-xl shadow-zinc-200/60"
+        >
+          <div className="flex size-11 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
+            <Icon className="size-5" />
+          </div>
+          <h3 className="mt-6 text-xl font-semibold tracking-tight">{title}</h3>
+          <p className="mt-3 text-sm leading-6 text-zinc-600">{body}</p>
+          <div className="mt-6 rounded-xl border border-zinc-200 bg-zinc-50 p-3 text-xs font-medium text-zinc-500">
+            Client / Task / Due Date / Recipient Email / Status / Notes
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
 
 function ReminderEventCard() {
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#090a09] p-4 mt-28">
+    <div className="rounded-2xl border border-white/10 bg-[#090a09] p-4">
       <div className="flex items-center justify-between">
         <p className="text-sm font-semibold text-white">Reminder preview</p>
         <Badge className="rounded-full bg-emerald-400/10 px-2 py-0.5 text-[10px] text-emerald-200 hover:bg-emerald-400/10">
@@ -280,11 +260,11 @@ function HeroConsole() {
               </Badge>
             </div>
             <h3 className="mt-3 text-2xl font-semibold tracking-tight text-white">
-              Sheet monitors
+              Client follow-up monitor
             </h3>
             <p className="mt-2 max-w-lg text-sm leading-6 text-zinc-400">
-              Create due-date monitors from Drive files, review inferred values,
-              and keep delivery logs close to active watches.
+              Watch invoice, document, approval, and renewal rows from the
+              sheet your client work already lives in.
             </p>
           </div>
           <div className="hidden items-center gap-2 lg:flex">
@@ -323,7 +303,7 @@ function HeroConsole() {
         <div className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-[#0d0e0d] shadow-2xl shadow-black/40">
           <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
             <div>
-              <p className="font-semibold text-white">New monitor</p>
+              <p className="font-semibold text-white">New client follow-up monitor</p>
               <p className="mt-1 text-xs text-zinc-500">
                 One guided flow: source, worksheet, mapped values, then
                 schedule.
@@ -700,102 +680,73 @@ function ReliabilityDiagram() {
 }
 
 function PricingWorkbench() {
-  const freePlan = plans[0]!;
-  const proPlan = plans[1]!;
-  const rows = [
-    ["Active watches", freePlan.activeSheets, proPlan.activeSheets],
-    ["Reminder emails", `${freePlan.reminders}/mo`, `${proPlan.reminders}/mo`],
-    ["Scan cadence", freePlan.scan, proPlan.scan],
-    ["Google Sheets", "Included", "Included"],
-    ["Excel workbook import", "Reconnect to enable", "Included"],
-    ["Billing", "No checkout", "Polar subscription"],
-  ];
-
   return (
-    <div className="mt-10 grid items-start gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-      <div className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-zinc-50 shadow-2xl shadow-zinc-200/60">
-        <div className="grid grid-cols-[1fr_0.8fr_0.8fr] border-b border-zinc-200 bg-white text-sm">
-          <div className="p-4">
-            <p className="font-semibold">Choose by operating volume</p>
-            <p className="mt-1 text-xs text-zinc-500">
-              The limits match the app entitlement checks.
+    <div className="mt-10 grid items-start gap-6">
+      <div className="grid gap-4 lg:grid-cols-4">
+        {plans.map((plan) => (
+          <div
+            key={plan.name}
+            className={cn(
+              "rounded-[1.5rem] border border-zinc-200 bg-zinc-50 p-5 shadow-xl shadow-zinc-200/50",
+              plan.name === "Starter" && "border-zinc-950 bg-white shadow-2xl",
+            )}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <h3 className="font-semibold">{plan.name}</h3>
+                <p className="mt-1 text-xs leading-5 text-zinc-500">
+                  {plan.bestFor}
+                </p>
+              </div>
+              {plan.name === "Starter" ? (
+                <Badge className="rounded-full bg-zinc-950 text-white hover:bg-zinc-950">
+                  wedge
+                </Badge>
+              ) : null}
+            </div>
+            <p className="mt-6 text-3xl font-semibold tracking-tight">
+              {plan.price}
             </p>
+            <div className="mt-6 grid gap-3 text-sm">
+              <div className="flex items-center justify-between border-b border-zinc-200 pb-3">
+                <span className="text-zinc-500">Sheets</span>
+                <span className="font-semibold">{plan.activeSheets}</span>
+              </div>
+              <div className="flex items-center justify-between border-b border-zinc-200 pb-3">
+                <span className="text-zinc-500">Reminders</span>
+                <span className="font-semibold">{plan.reminders}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-zinc-500">Scan</span>
+                <span className="font-semibold">{plan.cadence}</span>
+              </div>
+            </div>
           </div>
-          {plans.map((plan) => (
-            <div key={plan.name} className="border-l border-zinc-200 p-4">
-              <p className="text-xs uppercase tracking-wide text-zinc-500">
-                {plan.name}
-              </p>
-              <p className="mt-1 text-2xl font-semibold tracking-tight">
-                {plan.price}
-              </p>
-            </div>
-          ))}
-        </div>
-        <div className="divide-y divide-zinc-200">
-          {rows.map(([label, free, pro]) => (
-            <div
-              key={label}
-              className="grid grid-cols-[1fr_0.8fr_0.8fr] text-sm"
-            >
-              <div className="px-4 py-3 font-medium text-zinc-600">{label}</div>
-              <div className="border-l border-zinc-200 px-4 py-3 font-semibold">
-                {free}
-              </div>
-              <div className="border-l border-zinc-200 bg-white px-4 py-3 font-semibold">
-                {pro}
-              </div>
-            </div>
-          ))}
-        </div>
+        ))}
       </div>
 
-      <div className="grid gap-4">
-        <div className="rounded-[2rem] border border-zinc-200 bg-zinc-950 p-5 text-white shadow-2xl shadow-zinc-300/50">
-          <div className="flex items-center justify-between">
+      <div className="grid gap-4 lg:grid-cols-[1fr_0.85fr]">
+        <div className="rounded-[2rem] border border-zinc-200 bg-zinc-950 p-6 text-white shadow-2xl shadow-zinc-300/50">
+          <div className="grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-center">
             <div>
-              <p className="text-sm font-semibold">When Pro makes sense</p>
-              <p className="mt-1 text-xs text-zinc-500">
-                Three practical upgrade triggers
+              <p className="text-sm font-semibold">Start free, prove the workflow.</p>
+              <p className="mt-2 text-sm leading-6 text-zinc-400">
+                The free plan should answer one question: will automatic
+                follow-up emails save you from checking the sheet manually?
               </p>
             </div>
-            <Badge className="rounded-md bg-white text-black hover:bg-white">
-              Polar
-            </Badge>
-          </div>
-          <div className="mt-6 grid gap-4">
-            {[
-              ["2+ active sheets", "Free monitors one active spreadsheet."],
-              [
-                "More than 50 reminders",
-                "Monthly reminder volume moves to 2,500.",
-              ],
-              ["Same-day urgency", "Hourly scans replace daily checks."],
-            ].map(([title, body], index) => (
-              <div key={title} className="grid grid-cols-[2rem_1fr] gap-3">
-                <div className="flex size-8 items-center justify-center rounded-full bg-white text-sm font-semibold text-black">
-                  {index + 1}
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                "No checkout for Free",
+                "Starter for freelancers",
+                "Pro for hourly scans",
+                "Early lifetime for founding users",
+              ].map((item) => (
+                <div key={item} className="flex items-center gap-2 text-sm">
+                  <CheckCircle2 className="size-4 text-emerald-300" />
+                  {item}
                 </div>
-                <div>
-                  <p className="font-semibold">{title}</p>
-                  <p className="mt-1 text-sm leading-6 text-zinc-400">{body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-[2rem] border border-zinc-200 bg-white p-5 shadow-xl shadow-zinc-200/70">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
-              <Webhook className="size-5" />
-            </div>
-            <div>
-              <p className="font-semibold">Subscription state is synced</p>
-              <p className="mt-1 text-sm leading-6 text-zinc-500">
-                Polar webhooks update the shared labs database, so future apps
-                can use the same account and billing foundation.
-              </p>
+              ))}
             </div>
           </div>
         </div>
@@ -803,11 +754,14 @@ function PricingWorkbench() {
         <Button
           asChild
           size="lg"
-          className="h-14 rounded-2xl bg-zinc-950 text-white hover:bg-zinc-800"
+          className="h-full min-h-24 rounded-[2rem] bg-zinc-950 text-white hover:bg-zinc-800"
         >
-          <Link href="/sheetdue/dashboard">
-            Open SheetDue
-            <ArrowRight className="size-4" />
+          <Link href="/sheetdue/dashboard" className="flex-col gap-2">
+            <span>Start with one sheet</span>
+            <span className="flex items-center gap-2 text-sm font-normal text-zinc-300">
+              No Apps Script required
+              <ArrowRight className="size-4" />
+            </span>
           </Link>
         </Button>
       </div>
@@ -833,14 +787,14 @@ export function SheetdueLandingClient() {
               </span>
             </Link>
             <nav className="hidden items-center gap-7 text-sm font-medium text-zinc-400 md:flex">
+              <Link href="#example" className="hover:text-white">
+                Example
+              </Link>
               <Link href="#workflow" className="hover:text-white">
-                Workflow
+                How it works
               </Link>
-              <Link href="#rules" className="hover:text-white">
-                Rules
-              </Link>
-              <Link href="#reliability" className="hover:text-white">
-                Reliability
+              <Link href="#templates" className="hover:text-white">
+                Templates
               </Link>
               <Link href="#pricing" className="hover:text-white">
                 Pricing
@@ -873,11 +827,16 @@ export function SheetdueLandingClient() {
               className="max-w-3xl"
             >
               <h1 className="max-w-4xl text-5xl font-semibold tracking-[-0.055em] text-white sm:text-6xl lg:text-[4.85rem] lg:leading-[0.95]">
-                Google Sheets reminders, without calendar workarounds.
+                Never miss a client follow-up in Google Sheets.
               </h1>
               <p className="mt-7 max-w-xl text-lg leading-8 text-zinc-400">
-                Connect a spreadsheet, map your due-date and email columns, and
-                SheetDue sends reminder emails before deadlines are missed.
+                SheetDue watches your due-date, status, and email columns, then
+                sends reminder emails before client tasks, invoices, documents,
+                or renewals become overdue.
+              </p>
+              <p className="mt-4 max-w-xl text-base leading-7 text-zinc-500">
+                Connect your sheet. Pick the due-date, email, task, and status
+                columns. Let reminders send automatically.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <Button
@@ -896,21 +855,21 @@ export function SheetdueLandingClient() {
                   size="lg"
                   className="border-white/15 bg-white/5 text-white hover:bg-white/10"
                 >
-                  <Link href="#workflow">See how it works</Link>
+                  <Link href="#example">View example sheet</Link>
                 </Button>
               </div>
               <div className="mt-8 grid gap-3 text-sm text-zinc-400 sm:grid-cols-3 lg:max-w-xl">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="size-4 text-emerald-300" />
-                  Stable row IDs
+                  No Apps Script
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="size-4 text-emerald-300" />
-                  Test emails
+                  No Zapier setup
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="size-4 text-emerald-300" />
-                  Pause/resume watches
+                  No calendar workaround
                 </div>
               </div>
             </motion.div>
@@ -927,29 +886,32 @@ export function SheetdueLandingClient() {
         </div>
       </section>
 
-      <section id="workflow" className={cn(sectionFrameClass, "bg-zinc-100")}>
+      <section id="example" className={cn(sectionFrameClass, "bg-zinc-100")}>
         <div className={sectionInnerClass}>
           <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
             <div>
               <p className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
-                Workflow
+                Example sheet
               </p>
               <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
-                From spreadsheet to reminders in four decisions.
+                Turn your client tracker into an automatic reminder system.
               </h2>
             </div>
             <p className="text-lg leading-8 text-zinc-600">
-              SheetDue is built for people who already run operations in Google
-              Sheets. The setup flow avoids spreadsheet IDs and guesses sensible
-              defaults from real row samples.
+              If your sheet already has client tasks, due dates, recipient
+              emails, and a status column, SheetDue can watch it. No Apps
+              Script, Zapier setup, calendar workaround, or morning manual
+              checking.
             </p>
           </div>
 
-          <WorkflowCanvas />
+          <div className="mt-12">
+            <ExampleSheet />
+          </div>
         </div>
       </section>
 
-      <section id="rules" className={cn(sectionFrameClass, "bg-white")}>
+      <section id="workflow" className={cn(sectionFrameClass, "bg-white")}>
         <div
           className={cn(
             sectionInnerClass,
@@ -958,18 +920,111 @@ export function SheetdueLandingClient() {
         >
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
-              Reminder rules
+              How it works
             </p>
             <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
-              Send at the right moment, not whenever someone remembers.
+              Four decisions, then the emails go out automatically.
             </h2>
             <p className="mt-5 text-lg leading-8 text-zinc-600">
-              Configure before-due reminders, due-date reminders, and repeat
-              overdue reminders. SheetDue reads the spreadsheet timezone and
-              skips rows marked complete.
+              Connect your Google Sheet, choose the due-date, recipient, task,
+              and status columns, pick reminder rules, then let SheetDue send
+              follow-up emails before rows become overdue.
             </p>
+            <div className="mt-8 grid gap-3">
+              {[
+                "Connect your Google Sheet or import an Excel workbook.",
+                "Choose the due-date, recipient, task, and status columns.",
+                "Pick before-due, due-date, and repeat-overdue rules.",
+                "SheetDue sends emails and records delivery logs.",
+              ].map((step, index) => (
+                <div key={step} className="grid grid-cols-[2.25rem_1fr] items-start gap-3">
+                  <div className="flex size-9 items-center justify-center rounded-full bg-zinc-950 text-sm font-semibold text-white">
+                    {index + 1}
+                  </div>
+                  <p className="pt-2 text-sm font-medium leading-6 text-zinc-700">
+                    {step}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
           <ReminderDiagram />
+        </div>
+      </section>
+
+      <section className={cn(sectionFrameClass, "bg-zinc-100")}>
+        <div className={sectionInnerClass}>
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
+                Use cases
+              </p>
+              <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
+                Built for freelancers and small agencies tracking client work.
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-zinc-600">
+                Start narrow: follow-ups that already live in your client
+                tracker, invoice tracker, proposal sheet, or document collection
+                list.
+              </p>
+            </div>
+            <UseCaseSheet />
+          </div>
+        </div>
+      </section>
+
+      <section id="templates" className={cn(sectionFrameClass, "bg-white")}>
+        <div className={sectionInnerClass}>
+          <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
+                Free templates
+              </p>
+              <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
+                Start from a sheet that is already shaped for reminders.
+              </h2>
+            </div>
+            <p className="text-lg leading-8 text-zinc-600">
+              The easiest first step is not a blank app. It is a working Google
+              Sheet template with the right columns already in place.
+            </p>
+          </div>
+          <TemplateLibrary />
+          <div className="mt-8 rounded-2xl bg-zinc-950 p-5 text-white md:flex md:items-center md:justify-between">
+            <div>
+              <p className="text-lg font-semibold">Get the free client follow-up sheet.</p>
+              <p className="mt-1 text-sm text-zinc-400">
+                Want automatic email reminders from it? Connect the template to SheetDue.
+              </p>
+            </div>
+            <Button asChild className="mt-5 bg-white text-black hover:bg-zinc-200 md:mt-0">
+              <Link href="/sheetdue/dashboard">
+                Start with the template
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" className={cn(sectionFrameClass, "bg-white")}>
+        <div className={sectionInnerClass}>
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
+                Pricing
+              </p>
+              <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
+                Start with one client sheet. Upgrade when follow-ups become routine.
+              </h2>
+            </div>
+            <p className="text-lg leading-8 text-zinc-600">
+              Pricing is framed around adoption: one sheet for free, a cheap
+              starter tier for freelancers, and Pro when an agency needs more
+              sheets and hourly scans.
+            </p>
+          </div>
+          <PricingWorkbench />
         </div>
       </section>
 
@@ -985,59 +1040,27 @@ export function SheetdueLandingClient() {
                   Reliability
                 </p>
                 <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
-                  Designed for reruns, sorting, and real spreadsheet behavior.
+                  Safe to use on messy real spreadsheets.
                 </h2>
               </div>
-              <p className="mt-5 text-lg leading-8 text-zinc-400">
-                SheetDue manages a stable row identity column, stores reminder
-                events with idempotency keys, and queues delivery before sending
-                so overlapping cron runs do not double-send the same reminder.
-              </p>
+              <div>
+                <p className="text-lg leading-8 text-zinc-400">
+                  Rows can move, sheets can be sorted, scans can rerun, and
+                  completed tasks can be skipped without duplicate reminder
+                  emails.
+                </p>
+                <div className="mt-6 grid gap-2 sm:grid-cols-2">
+                  {reliabilityItems.map((item) => (
+                    <div key={item} className="flex items-center gap-2 text-sm text-zinc-300">
+                      <CheckCircle2 className="size-4 text-emerald-300" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
             <ReliabilityDiagram />
           </div>
-        </div>
-      </section>
-
-      <section className={cn(sectionFrameClass, "bg-zinc-100")}>
-        <div className={sectionInnerClass}>
-          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
-                Use cases
-              </p>
-              <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
-                For the sheets that quietly run the business.
-              </h2>
-              <p className="mt-5 text-lg leading-8 text-zinc-600">
-                SheetDue does not care whether a row is a client request,
-                invoice, renewal, or compliance item. It needs the same three
-                operational fields: task, due date, and recipient.
-              </p>
-            </div>
-            <UseCaseSheet />
-          </div>
-        </div>
-      </section>
-
-      <section id="pricing" className={cn(sectionFrameClass, "bg-white")}>
-        <div className={sectionInnerClass}>
-          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
-                Pricing
-              </p>
-              <h2 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
-                Start with one sheet. Upgrade when reminders become operational.
-              </h2>
-            </div>
-            <p className="text-lg leading-8 text-zinc-600">
-              SheetDue pricing is tied to the two things that matter in the
-              product: how many sheets are active and how often reminders need
-              to be checked.
-            </p>
-          </div>
-          <PricingWorkbench />
         </div>
       </section>
 

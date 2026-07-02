@@ -1,6 +1,10 @@
 import { getSheetdueGoogleRedirectUri } from "@/lib/google/redirect-uri";
 import { inferDateFormatFromValues } from "@/lib/sheetdue/date-inference";
-import { assertCanSendReminder, incrementReminderUsage } from "@/lib/sheetdue/usage";
+import {
+  UsageLimitError,
+  assertCanSendReminder,
+  incrementReminderUsage,
+} from "@/lib/sheetdue/usage";
 import {
   evaluateSheetRow,
   resolveMappedValue,
@@ -44,6 +48,17 @@ function rowsFromExecute(result: unknown) {
   }
 
   return [];
+}
+
+export function reminderSendFailureStatus(error: unknown) {
+  if (
+    error instanceof UsageLimitError &&
+    error.code === "monthly_reminder_limit"
+  ) {
+    return "queued" as const;
+  }
+
+  return "failed" as const;
 }
 
 export async function scanSheetdueWatches(now = new Date()) {
@@ -174,7 +189,7 @@ export async function scanSheetdueWatches(now = new Date()) {
       });
 
       for (const candidate of candidates) {
-        await db
+        const inserted = await db
           .insert(schema.sheetdueReminderEvents)
           .values({
             watchId: candidate.watchId,
@@ -187,8 +202,12 @@ export async function scanSheetdueWatches(now = new Date()) {
             body: candidate.body,
             idempotencyKey: candidate.idempotencyKey,
           })
-          .onConflictDoNothing();
-        queued += 1;
+          .onConflictDoNothing()
+          .returning({ id: schema.sheetdueReminderEvents.id });
+
+        if (inserted.length > 0) {
+          queued += 1;
+        }
       }
     }
 
@@ -222,6 +241,7 @@ export async function sendQueuedReminderEvents(limit = 50) {
   const rows = rowsFromExecute(locked);
   let sent = 0;
   let failed = 0;
+  let deferred = 0;
 
   for (const event of rows) {
     const watch = await db.query.sheetdueSheetWatches.findFirst({
@@ -257,6 +277,20 @@ export async function sendQueuedReminderEvents(limit = 50) {
       await incrementReminderUsage(watch.userId);
       sent += 1;
     } catch (error) {
+      if (reminderSendFailureStatus(error) === "queued") {
+        await db
+          .update(schema.sheetdueReminderEvents)
+          .set({
+            status: "queued",
+            errorMessage:
+              error instanceof Error ? error.message : "Reminder send deferred.",
+            updatedAt: new Date(),
+          })
+          .where(eq(schema.sheetdueReminderEvents.id, event.id));
+        deferred += 1;
+        continue;
+      }
+
       await db
         .update(schema.sheetdueReminderEvents)
         .set({
@@ -270,7 +304,7 @@ export async function sendQueuedReminderEvents(limit = 50) {
     }
   }
 
-  return { sent, failed };
+  return { sent, failed, deferred };
 }
 
 export async function runSheetdueCron() {

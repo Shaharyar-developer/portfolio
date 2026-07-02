@@ -1,4 +1,5 @@
 import { jsonError } from "@/lib/http";
+import { isBearerSecretAuthorized } from "@/lib/security";
 import { runSheetdueCron } from "@/lib/sheetdue/cron";
 import { NextResponse } from "next/server";
 
@@ -9,8 +10,11 @@ export async function GET(request: Request) {
     const secret = process.env.CRON_SECRET;
 
     if (
-      secret &&
-      request.headers.get("authorization") !== `Bearer ${secret}`
+      !isBearerSecretAuthorized({
+        authorizationHeader: request.headers.get("authorization"),
+        secret,
+        allowMissingSecretInDevelopment: true,
+      })
     ) {
       return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
     }

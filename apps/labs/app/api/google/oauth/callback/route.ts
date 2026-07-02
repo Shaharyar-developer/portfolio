@@ -7,6 +7,7 @@ import {
   encryptToken,
   exchangeGoogleCode,
   getGoogleUserInfo,
+  hasUsableRefreshToken,
 } from "@workspace/google";
 import { and, eq } from "drizzle-orm";
 import { cookies } from "next/headers";
@@ -42,6 +43,18 @@ export async function GET(request: Request) {
         eq(schema.googleConnections.googleAccountId, profile.googleAccountId),
       ),
     });
+    if (
+      !hasUsableRefreshToken({
+        refreshToken: tokens.refresh_token,
+        existingEncryptedRefreshToken: existing?.encryptedRefreshToken,
+      })
+    ) {
+      throw new Error(
+        "Google did not return a refresh token. Please reconnect SheetDue and approve offline access.",
+      );
+    }
+    const encryptedRefreshToken =
+      encryptToken(tokens.refresh_token) ?? existing?.encryptedRefreshToken;
 
     await db
       .insert(schema.googleConnections)
@@ -52,8 +65,7 @@ export async function GET(request: Request) {
         email: profile.email,
         scopes: tokens.scope ?? "",
         encryptedAccessToken: encryptToken(tokens.access_token),
-        encryptedRefreshToken:
-          encryptToken(tokens.refresh_token) ?? existing?.encryptedRefreshToken,
+        encryptedRefreshToken,
         accessTokenExpiresAt: tokens.expiry_date
           ? new Date(tokens.expiry_date)
           : null,
@@ -68,8 +80,7 @@ export async function GET(request: Request) {
           email: profile.email,
           scopes: tokens.scope ?? "",
           encryptedAccessToken: encryptToken(tokens.access_token),
-          encryptedRefreshToken:
-            encryptToken(tokens.refresh_token) ?? existing?.encryptedRefreshToken,
+          encryptedRefreshToken,
           accessTokenExpiresAt: tokens.expiry_date
             ? new Date(tokens.expiry_date)
             : null,
